@@ -1,5 +1,6 @@
 from tkinter import *
 from matplotlib import pyplot as plt
+import numpy as np
 
 master = Tk()
 master.title("Matplotlib & Tkinter")
@@ -82,8 +83,37 @@ def bar_chart():
 
     plt.show()
 
+def data_comparison_bar_chat():
+    # data to plot
+    driver_first_year = [238, 243, 247, 254]
+    driver_second_year = [255, 263, 268, 271]
+
+    # create plot
+    fig, ax = plt.subplots()
+    bar_width = 0.35
+    X = np.arange(4)
+
+    p1 = plt.bar(X, driver_first_year, bar_width, color='b',
+                 label='First Year')
+
+    # The bar of second plot starts where the first bar ends
+    p2 = plt.bar(X + bar_width, driver_second_year, bar_width,
+                 color='g',
+                 label='Second Year')
+
+    plt.ylim([0, 400])
+    plt.ylabel('Distance')
+    plt.title('Average Driver Distance')
+    plt.xticks(X + (bar_width / 2), ("September", "December",
+                                     "February", "May"))
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
 Button(master, text="Line Graph", command=input_for_line_graph).grid(row=0, column=0)
 Button(master, text="Pie Chart", command=pie_chart).grid(row=0, column=1)
 Button(master, text="Horizontal Bar Chart", command=bar_chart).grid(row=3, column=0)
+Button(master, text="Data Comparison", command=data_comparison_bar_chat).grid(row=5, column=0)
 
 master.mainloop()
