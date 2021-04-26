@@ -83,6 +83,7 @@ def bar_chart():
 
     plt.show()
 
+#Data Comparison Bar Chart
 def data_comparison_bar_chat():
     # data to plot
     driver_first_year = [238, 243, 247, 254]
