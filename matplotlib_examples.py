@@ -28,12 +28,19 @@ def input_for_line_graph():
 
 #Pie Chart
 def pie_chart():
-    accuracy = ["Hook", "Straight", "Draw", "Slice", "Fade", "Straight", "Hook", "Straight", "Hook", "Draw", "Straight"]
-    driv_hook = (accuracy.count("Hook"))
-    driv_fade = (accuracy.count("Fade"))
-    driv_slice = (accuracy.count("Slice"))
-    driv_draw = (accuracy.count("Draw"))
-    driv_straight = (accuracy.count("Straight"))
+    # accuracy = ["Hook", "Straight", "Draw", "Slice", "Fade", "Straight", "Hook", "Straight", "Hook", "Draw", "Straight"]
+    # driv_hook = (accuracy.count("Hook"))
+    # driv_fade = (accuracy.count("Fade"))
+    # driv_slice = (accuracy.count("Slice"))
+    # driv_draw = (accuracy.count("Draw"))
+    # driv_straight = (accuracy.count("Straight"))
+    accuracy = [4, 4, 4, 4, 4]
+    driv_hook = accuracy[0]
+    driv_fade = accuracy[1]
+    driv_slice = accuracy[2]
+    driv_draw = accuracy[3]
+    driv_straight = accuracy[4]
+
     labels = 'Hook', 'Fade', 'Slice', 'Draw', "Straight"
     sizes = [driv_hook, driv_fade, driv_slice, driv_draw, driv_straight]
     explode = (0, 0.1, 0, 0, 0)
