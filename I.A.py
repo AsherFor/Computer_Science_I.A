@@ -9,11 +9,11 @@ Csv_file = "Golf Statistics"
 
 master = Tk()
 master.title("Golf Statistics")
-master.geometry("500x150")
+master.geometry("800x200")
 master.configure(background="white")
 
-#Label and entry for name
-Label(master, text='Enter first name and last name').grid(row=0)
+#Entry for name and date
+Label(master, text='Enter first name, last name, and the date').grid(row=0)
 name = Entry(master)
 name.grid(row=0, column=1)
 
@@ -69,6 +69,11 @@ def consistency_graph():
     plt.savefig('add_picture_matplotlib_figure.png', bbox_inches='tight')
     plt.show()
 
+#Individual notes about golfer
+Label(master, text='Individual notes about golfer').grid(row=5)
+notes = Entry(master)
+notes.grid(row=5, column=1)
+
 #Place holder function for graphs
 def place_holder():
     print("hi")
@@ -80,7 +85,7 @@ Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_
 Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=3)
 
 #Visual Accuracy of a Golf Shot
-Button(master, text="Bird's Eye View of Golf Hole to Track Consistency",command=consistency_graph).grid(row=20)
+Button(master, text="Bird's Eye View of Golf Hole to Track Consistency",command=consistency_graph).grid(row=4)
 
 #Submit Buttons
 # Button(master, text="Submit",command=get_Input).grid(row=0, column=2)
