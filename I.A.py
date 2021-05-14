@@ -9,11 +9,14 @@ Csv_file = "Golf Statistics"
 
 master = Tk()
 master.title("Golf Statistics")
-master.geometry("800x200")
+master.geometry("450x300")
 master.configure(background="white")
 
+#Header of the Program
+# example4 = Label(master, width=10, font="Calibri 10")
+
 #Entry for name and date
-Label(master, text='Enter first name, last name, and the date').grid(row=0)
+Label(master, text='First Name and Last Name').grid(row=0)
 name = Entry(master)
 name.grid(row=0, column=1)
 
@@ -22,6 +25,7 @@ def average_distance():
     newWindow.title("Calculate Average Distance")
     newWindow.geometry("400x200")
     Button(newWindow, text="Graph", command=place_holder).grid(row=3, column=0)
+    Button(newWindow, text="Calculate", command=place_holder).grid(row=3, column=1)
     # Label and entry for club and distance of golf shots
     Label(newWindow, text='What Club Are You Using?').grid(row=1)
     Label(newWindow, text='Enter Distance of Golf Shots').grid(row=2)
@@ -35,6 +39,7 @@ def accuracy_of_shot():
     newWindow.title("Calculate Average Distance")
     newWindow.geometry("600x200")
     Button(newWindow, text="Graph", command=place_holder).grid(row=3, column=0)
+    Button(newWindow, text="Calculate", command=place_holder).grid(row=3, column=1)
     #Label and entry for accuracy of a shot
     Label(newWindow, text='What Club Are You Using?').grid(row=1)
     Label(newWindow, text='Enter the type of shot you hit (hook, slice, fade, draw, push, pull').grid(row=2)
@@ -48,6 +53,7 @@ def percentage_chance_of_putt():
     newWindow.title("Calculate Average Distance")
     newWindow.geometry("500x200")
     Button(newWindow, text="Graph", command=place_holder).grid(row=3, column=0)
+    Button(newWindow, text="Calculate", command=place_holder).grid(row=3, column=1)
     # Label and entry for percentage chance of making a putt
     Label(newWindow, text='Length from the hole(10ft, 5ft, 1ft, etc)').grid(row=1)
     Label(newWindow, text='Enter the Amount of putts it took to make it into the hole').grid(row=2)
@@ -79,13 +85,16 @@ def place_holder():
     print("hi")
 
 
-#Buttons for Different Modes
+#Buttons
 Button(master, text="Calculate Average Distance of Golf Club",command=average_distance).grid(row=1)
 Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=2)
 Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=3)
-
-#Visual Accuracy of a Golf Shot
 Button(master, text="Bird's Eye View of Golf Hole to Track Consistency",command=consistency_graph).grid(row=4)
+Button(master, text="Clear",command=place_holder).grid(row=6, column=0)
+Button(master, text="Exit",command=place_holder).grid(row=6, column=1)
+Button(master, text="Open",command=place_holder).grid(row=6, column=2)
+Button(master, text="Download",command=place_holder).grid(row=6, column=3)
+
 
 #Submit Buttons
 # Button(master, text="Submit",command=get_Input).grid(row=0, column=2)
