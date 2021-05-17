@@ -22,6 +22,11 @@ Label(master, text='First Name and Last Name').grid(row=2)
 name = Entry(master)
 name.grid(row=2, column=1)
 
+#Entry for Date
+Label(master, text='Date').grid(row=3)
+date = Entry(master)
+date.grid(row=3, column=1)
+
 def average_distance():
     newWindow = Toplevel(master)
     newWindow.title("Calculate Average Distance")
@@ -43,7 +48,7 @@ def average_distance():
 
 def accuracy_of_shot():
     newWindow = Toplevel(master)
-    newWindow.title("Calculate Average Distance")
+    newWindow.title("Calculate Accuracy")
     newWindow.geometry("600x200")
     #Header
     main_header = Label(newWindow, text="Accuracy of a Golf Club")
@@ -62,7 +67,7 @@ def accuracy_of_shot():
 
 def percentage_chance_of_putt():
     newWindow = Toplevel(master)
-    newWindow.title("Calculate Average Distance")
+    newWindow.title("Calculate Chance of Making a Putt")
     newWindow.geometry("500x200")
     # Header
     main_header = Label(newWindow, text="Chance of Making a Putt")
@@ -102,25 +107,13 @@ notes = Entry(master)
 notes.grid(row=7, column=1)
 
 #Buttons
-Button(master, text="Calculate Average Distance of Golf Club",command=average_distance).grid(row=3)
-Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=4)
-Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=5)
-Button(master, text="Bird's Eye View of Golf Hole to Track Consistency",command=consistency_graph).grid(row=6)
-Button(master, text="Clear",command=place_holder).grid(row=9, column=0)
-Button(master, text="Exit",command=place_holder).grid(row=9, column=1)
-Button(master, text="Open",command=place_holder).grid(row=9, column=2)
-Button(master, text="Download",command=place_holder).grid(row=9, column=3)
-
-
-#Submit Buttons
-# Button(master, text="Submit",command=get_Input).grid(row=0, column=2)
-# Button(master, text="Submit",command=get_Input).grid(row=14, column=2)
-# Button(master, text="Submit",command=get_Input).grid(row=15, column=2)
-# Button(master, text="Submit",command=get_Input).grid(row=16, column=2)
-# Button(master, text="Submit",command=get_Input).grid(row=17, column=2)
-# Button(master, text="Submit",command=get_Input).grid(row=18, column=2)
-# Button(master, text="Submit",command=get_Input).grid(row=19, column=2)
+Button(master, text="Calculate Average Distance of Golf Club",command=average_distance).grid(row=4)
+Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=5)
+Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=6)
+Button(master, text="Bird's Eye View of Golf Hole to Track Consistency",command=consistency_graph).grid(row=7)
+Button(master, text="Clear",command=place_holder).grid(row=8, column=0)
+Button(master, text="Exit",command=place_holder).grid(row=8, column=1)
+Button(master, text="Open",command=place_holder).grid(row=8, column=2)
+Button(master, text="Download",command=place_holder).grid(row=8, column=3)
 
 master.mainloop()
-
-
