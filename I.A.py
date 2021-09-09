@@ -31,6 +31,7 @@ def name_user():
 Label(master, text='Date').grid(row=3)
 date = Entry(master)
 date.grid(row=3, column=1)
+
 def date_of_user():
     entry_date = date.get()
     print(entry_date)
@@ -44,7 +45,7 @@ def average_distance():
     main_header.config(font=("Times New Roman", 20))
     main_header.grid(row=0, column=0)
     #Buttons
-    Button(newWindow, text="Graph", command=place_holder).grid(row=3, column=0)
+    Button(newWindow, text="Graph", command= lambda: average_distance_bar_chart(distance, club_name)).grid(row=3, column=0)
     Button(newWindow, text="Calculate", command= lambda: claculate_average_distance(distance, club_name)).grid(row=4, column=1)
     # Label and entry for club and distance of golf shots
     Label(newWindow, text='What Club Are You Using?').grid(row=1)
@@ -65,6 +66,27 @@ def claculate_average_distance(distance, club_name):
     number_of_symbols = value + 1
     average_yards = (eval(entry_distance) / number_of_symbols)
     print("You are able to hit your", entry_club_name, "an average distance of", round(average_yards, 2), "yards!")
+
+def average_distance_bar_chart(distance, club_name):
+    entry_distance = distance.get()
+    entry_club_name = club_name.get()
+    value = 0
+    for x in entry_distance:
+        if x == '+':
+            value = value + 1
+    number_of_symbols = value + 1
+    average_yards = (eval(entry_distance) / number_of_symbols)
+
+    plt.barh([entry_club_name],
+             [round(average_yards, 2)], align='center', label="Distance")
+    plt.legend()
+
+    plt.xlim([0, 500])
+    plt.ylabel('Type of Golf Club')
+    plt.xlabel('Distance (yds)')
+    plt.title('Average Distance of ' + entry_club_name)
+
+    plt.show()
 
 def accuracy_of_shot():
     newWindow = Toplevel(master)
@@ -88,7 +110,7 @@ def accuracy_of_shot():
 def calculate_accuracy(name_of_club, accuracy):
     entry_name_of_club = name_of_club.get()
     entry_accuracy = accuracy.get()
-    print(entry_name_of_club)
+
     # Counting the amount of occurrences of each type of shot
     Hook = entry_accuracy.count("Hook")
     Slice = entry_accuracy.count("Slice")
@@ -96,6 +118,7 @@ def calculate_accuracy(name_of_club, accuracy):
     Draw = entry_accuracy.count("Draw")
     Push = entry_accuracy.count("Push")
     Pull = entry_accuracy.count("Pull")
+
     # Calculating the percentage of hitting a certain accuracy shot
     result_hook = (Hook / len(entry_accuracy.split()) * 100)
     result_slice = (Slice / len(entry_accuracy.split()) * 100)
@@ -103,38 +126,36 @@ def calculate_accuracy(name_of_club, accuracy):
     result_draw = (Draw / len(entry_accuracy.split()) * 100)
     result_push = (Push / len(entry_accuracy.split()) * 100)
     result_pull = (Pull / len(entry_accuracy.split()) * 100)
-    # Printing result of calculations
-    print("You will hit a hook", round(result_hook, 2), "% of", len(entry_accuracy.split()), "shots!")
-    print("You will hit a slice", round(result_slice, 2), "% of", len(entry_accuracy.split()), "shots!")
-    print("You will hit a fade", round(result_fade, 2), "% of", len(entry_accuracy.split()), "shots!")
-    print("You will hit a draw", round(result_draw, 2), "% of", len(entry_accuracy.split()), "shots!")
-    print("You will hit a push", round(result_push, 2), "% of", len(entry_accuracy.split()), "shots!")
-    print("You will hit a pull", round(result_pull, 2), "% of", len(entry_accuracy.split()), "shots!")
 
+    # Printing result of calculations
+    if Hook > 0:
+        print("You will hit a hook shot with your", entry_name_of_club, round(result_hook, 2), "% of", len(entry_accuracy.split()), "shots!")
+    if Slice > 0:
+        print("You will hit a slice shot with your", entry_name_of_club, round(result_slice, 2), "% of", len(entry_accuracy.split()), "shots!")
+    if Fade > 0:
+        print("You will hit a fade shot with your", entry_name_of_club, round(result_fade, 2), "% of", len(entry_accuracy.split()), "shots!")
+    if Draw > 0:
+        print("You will hit a draw shot with your", entry_name_of_club, round(result_draw, 2), "% of", len(entry_accuracy.split()), "shots!")
+    if Push > 0:
+        print("You will hit a push shot with your", entry_name_of_club, round(result_push, 2), "% of", len(entry_accuracy.split()), "shots!")
+    if Pull > 0:
+        print("You will hit a pull shot with your", entry_name_of_club, round(result_pull, 2), "% of", len(entry_accuracy.split()), "shots!")
 
 #Pie Chart for the accuracy of a golf club
+# I am having some trouble with the appearance of my graph
 def accuruacy_pie_chart(accuracy, name_of_club):
     entry_name_of_club = name_of_club.get()
     print(entry_name_of_club)
     entry_accuracy = accuracy.get()
+
+    # Counter for the occurrences of the different accuracies in the entry
     Hook = entry_accuracy.count("Hook")
     Slice = entry_accuracy.count("Slice")
     Fade = entry_accuracy.count("Fade")
     Draw = entry_accuracy.count("Draw")
     Push = entry_accuracy.count("Push")
     Pull = entry_accuracy.count("Pull")
-    # accuracy_array = [Hook, Slice, Fade, Draw, Push, Pull]
-    # # driv_hook = (accuracy.count("Hook"))
-    # # driv_fade = (accuracy.count("Fade"))
-    # # driv_slice = (accuracy.count("Slice"))
-    # # driv_draw = (accuracy.count("Draw"))
-    # # driv_straight = (accuracy.count("Straight"))
-    # accuracy = [4, 4, 4, 4, 4]
-    # driv_hook = accuracy[0]
-    # driv_fade = accuracy[1]
-    # driv_slice = accuracy[2]
-    # driv_draw = accuracy[3]
-    # driv_straight = accuracy[4]
+
     labels = 'Hook', 'Slice', 'Fade', 'Draw', "Push", "Pull"
     sizes = [Hook, Slice, Fade, Draw, Push, Pull]
     explode = (0, 0.1, 0, 0, 0, 0)
@@ -143,20 +164,23 @@ def accuruacy_pie_chart(accuracy, name_of_club):
     ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
     ax1.axis('equal')
-    plt.title('Accuracy of', entry_name_of_club)
+    plt.title('Accuracy of ')
     plt.show()
 
 def percentage_chance_of_putt():
     newWindow = Toplevel(master)
     newWindow.title("Calculate Chance of Making a Putt")
     newWindow.geometry("600x200")
+
     # Header
     main_header = Label(newWindow, text="Chance of Making a Putt")
     main_header.config(font=("Times New Roman", 20))
     main_header.grid(row=0, column=0)
+
     # Buttons
-    Button(newWindow, text="Graph", command=place_holder).grid(row=3, column=0)
+    Button(newWindow, text="Graph", command=lambda: chance_of_making_putt_pie_chart(length, amount_of_putts)).grid(row=3, column=0)
     Button(newWindow, text="Calculate", command=lambda: calculate_change_of_putt(length, amount_of_putts)).grid(row=3, column=1)
+
     # Label and entry for percentage chance of making a putt
     Label(newWindow, text='Length from the hole(10ft, 5ft, 1ft, etc)').grid(row=1)
     Label(newWindow, text='Enter the amount of putts it took to make it into the hole').grid(row=2)
@@ -168,6 +192,7 @@ def percentage_chance_of_putt():
 def calculate_change_of_putt(length, amount_of_putts):
     entry_length = length.get()
     entry_amount_of_putts = amount_of_putts.get()
+
     # Counting the amount of putts inputted
     One_Putt = entry_amount_of_putts.count("1")
     Two_Putt = entry_amount_of_putts.count("2")
@@ -178,7 +203,7 @@ def calculate_change_of_putt(length, amount_of_putts):
     Seven_Putt = entry_amount_of_putts.count("7")
     Eight_Putt = entry_amount_of_putts.count("8")
     Nine_Putt = entry_amount_of_putts.count("9")
-    Ten_Putt = entry_amount_of_putts.count("10")
+
     # Calculating the percentages of making a putt
     result_one_putt = (One_Putt / len(entry_amount_of_putts.split()) * 100)
     result_two_putt = (Two_Putt / len(entry_amount_of_putts.split()) * 100)
@@ -189,18 +214,55 @@ def calculate_change_of_putt(length, amount_of_putts):
     result_seven_putt = (Seven_Putt / len(entry_amount_of_putts.split()) * 100)
     result_eight_putt = (Eight_Putt / len(entry_amount_of_putts.split()) * 100)
     result_nine_putt = (Nine_Putt / len(entry_amount_of_putts.split()) * 100)
-    result_ten_putt = (Ten_Putt / len(entry_amount_of_putts.split()) * 100)
+
     # Printing result of calculations
-    print("You will have an", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "ft away!")
-    print("You will have an", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "ft away!")
-    print("You will have an", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "ft away!")
-    print("You will have an", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "ft away!")
-    print("You will have an", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "ft away!")
-    print("You will have an", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "ft away!")
-    print("You will have an", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "ft away!")
-    print("You will have an", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "ft away!")
-    print("You will have an", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "ft away!")
-    print("You will have an", round(result_ten_putt, 2), "% change of making a ten putt from", entry_length, "ft away!")
+    if result_one_putt > 0:
+        print("You will have an", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "ft away!")
+    if result_two_putt > 0:
+        print("You will have an", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "ft away!")
+    if result_three_putt > 0:
+        print("You will have an", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "ft away!")
+    if result_four_putt > 0:
+        print("You will have an", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "ft away!")
+    if result_five_putt > 0:
+        print("You will have an", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "ft away!")
+    if result_six_putt > 0:
+        print("You will have an", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "ft away!")
+    if result_seven_putt > 0:
+        print("You will have an", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "ft away!")
+    if result_eight_putt > 0:
+        print("You will have an", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "ft away!")
+    if result_nine_putt > 0:
+        print("You will have an", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "ft away!")
+
+
+#Pie Chart for the percentage chance of making a putt from a certain distance
+# I am having some trouble with the appearance of my graph
+def chance_of_making_putt_pie_chart(length, amount_of_putts):
+    entry_length = length.get()
+    entry_amount_of_putts = amount_of_putts.get()
+
+    # Counter for the occurrences of the number of putts to make it into the hole.
+    One_Putt = entry_amount_of_putts.count("1")
+    Two_Putt = entry_amount_of_putts.count("2")
+    Three_Putt = entry_amount_of_putts.count("3")
+    Four_Putt = entry_amount_of_putts.count("4")
+    Five_Putt = entry_amount_of_putts.count("5")
+    Six_Putt = entry_amount_of_putts.count("6")
+    Seven_Putt = entry_amount_of_putts.count("7")
+    Eight_Putt = entry_amount_of_putts.count("8")
+    Nine_Putt = entry_amount_of_putts.count("9")
+
+    labels = "One Putt", "Two Putt", "Three Putt", "Four Putt", "Five Putt", "Six Putt", "Seven Putt", "Eight Putt", "Nine Putt"
+    sizes = [One_Putt, Two_Putt, Three_Putt, Four_Putt, Five_Putt, Six_Putt, Seven_Putt, Eight_Putt, Nine_Putt]
+    explode = (0, 0.1, 0, 0, 0, 0, 0, 0, 0)
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax1.axis('equal')
+    plt.title("Percentage Chance of Making a Putt from " + entry_length + "ft Away")
+    plt.show()
 
 def consistency_graph():
     fig, ax = plt.subplots()
