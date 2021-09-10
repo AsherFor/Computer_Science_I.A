@@ -1,5 +1,6 @@
 from tkinter import *
 from matplotlib import pyplot as plt
+# from PIL import Image, ImageTK
 import matplotlib.image as mpimg
 import numpy as np
 from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
@@ -265,17 +266,53 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     plt.show()
 
 def consistency_graph():
-    fig, ax = plt.subplots()
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    arr_lena = mpimg.imread('GolfHole.png')
-    imagebox = OffsetImage(arr_lena, zoom=0.2)
-    ab = AnnotationBbox(imagebox, (0.4, 0.6))
-    ax.add_artist(ab)
-    plt.grid()
-    plt.draw()
-    plt.savefig('add_picture_matplotlib_figure.png', bbox_inches='tight')
-    plt.show()
+    newWindow = Toplevel(master)
+    newWindow.title("Tracking Consistency")
+    newWindow.geometry("600x600")
+
+    golf_hole = Canvas(newWindow, bg="white", height="500")
+    golf_hole.grid(row=0, column=0)
+
+    image = Image.open(file="GolfHole.png")
+    image = image.resize((400,400), Image.ANTIALIAS)
+    # image = ImageTK.PhotoImage(image)
+    golf_hole.create_image(0, 0, image=image)
+
+    # fig, ax = plt.subplots()
+    # ax.set_xlim(0, 1)
+    # ax.set_ylim(0, 1)
+    # arr_lena = mpimg.imread('GolfHole.png')
+    # imagebox = OffsetImage(arr_lena, zoom=0.2)
+    # ab = AnnotationBbox(imagebox, (0.4, 0.6))
+    # ax.add_artist(ab)
+    # plt.grid()
+    # plt.draw()
+    # plt.savefig('add_picture_matplotlib_figure.png', bbox_inches='tight')
+    # plt.show()
+
+global golf_hole;
+
+def paint(event):
+    global golf_hole
+    newWindow = Toplevel(master)
+    newWindow.title("Tracking Consistency")
+    newWindow.geometry("600x600")
+
+
+    golf_hole = Canvas(newWindow, bg="white", height="500")
+    golf_hole.grid(row=0, column=0)
+    # Co-ordinates.
+    x1, y1, x2, y2 = (event.x - 3), (event.y - 3), (event.x + 3), (event.y + 3)
+
+    # Colour
+    Colour = "#000fff000"
+
+    # specify type of display
+    golf_hole.create_line(x1, y1, x2, y2, fill=Colour)
+def run():
+    global golf_hole
+    golf_hole.bind("<B1-Motion>", paint)
+
 
 #Place holder function for graphs
 def place_holder():
@@ -297,7 +334,7 @@ def exit_program():
 Button(master, text="Calculate Average Distance of Golf Club",command=average_distance).grid(row=4)
 Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=5)
 Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=6)
-Button(master, text="Bird's Eye View of Golf Hole to Track Consistency",command=consistency_graph).grid(row=7)
+Button(master, text="Tracking Consistency",command=run).grid(row=7)
 Button(master, text="Clear",command=place_holder).grid(row=9, column=0)
 Button(master, text="Exit",command=exit_program).grid(row=9, column=1)
 Button(master, text="Open",command=place_holder).grid(row=9, column=2)
