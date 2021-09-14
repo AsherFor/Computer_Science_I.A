@@ -1,14 +1,45 @@
 from tkinter import *
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 # from PIL import Image, ImageTK
-import matplotlib.image as mpimg
+# import matplotlib.image as mpimg
 import numpy as np
-from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
-import pandas as pd
-# import csv
+# from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
+# import pandas as pd
+import runpy
+import csv
+import xlsxwriter
 
-# file = pd.read_csv("Golf_Statistics.csv")
-# Golf_Statistics = pd.read_csv("Golf_Statistics.csv")
+# Creates a csv
+with open('Golf_Statistics.csv', 'w', newline='') as f:
+    thewriter = csv.writer(f)
+    thewriter.writerow(['Name', 'Date'])
+
+# Creates an excel file
+outWorkbook = xlsxwriter.Workbook('Average.xlsx')
+outSheet = outWorkbook.add_worksheet()
+
+#Creating column titles for the average distance of a golf club
+outSheet.write("A1", "Name")
+outSheet.write("B1", "Date")
+outSheet.write("C1", "Individual Notes")
+outSheet.write("D1", "Driver")
+outSheet.write("E1", "3-Wood")
+outSheet.write("F1", "5-Wood or 2 Iron")
+outSheet.write("G1", "3 Iron or hybrid")
+outSheet.write("H1", "4 Iron")
+outSheet.write("I1", "5 Iron")
+outSheet.write("I1", "6 Iron")
+outSheet.write("J1", "7 Iron")
+outSheet.write("K1", "8 Iron")
+outSheet.write("L1", "9 Iron")
+outSheet.write("M1", "Pitching Wedge")
+outSheet.write("N1", "Gap Wedge")
+outSheet.write("O1", "Sand Wedge")
+outSheet.write("P1", "Lob Wedge")
+outSheet.write("Q1", "Putter")
+
+outSheet.write("A2", "Saw Dude")
+
 
 master = Tk()
 master.title("Golf Statistics")
@@ -27,6 +58,7 @@ name.grid(row=2, column=1)
 def name_user():
     entry_name = name.get()
     print(entry_name)
+    outSheet.write("B2", entry_name)
 
 #Entry for Date
 Label(master, text='Date').grid(row=3)
@@ -36,6 +68,7 @@ date.grid(row=3, column=1)
 def date_of_user():
     entry_date = date.get()
     print(entry_date)
+
 
 def average_distance():
     newWindow = Toplevel(master)
@@ -130,23 +163,22 @@ def calculate_accuracy(name_of_club, accuracy):
 
     # Printing result of calculations
     if Hook > 0:
-        print("You will hit a hook shot with your", entry_name_of_club, round(result_hook, 2), "% of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a hook shot with your", entry_name_of_club, round(result_hook, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
     if Slice > 0:
-        print("You will hit a slice shot with your", entry_name_of_club, round(result_slice, 2), "% of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a slice shot with your", entry_name_of_club, round(result_slice, 2), "%% of the time out of", len(entry_accuracy.split()), "shots!")
     if Fade > 0:
-        print("You will hit a fade shot with your", entry_name_of_club, round(result_fade, 2), "% of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a fade shot with your", entry_name_of_club, round(result_fade, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
     if Draw > 0:
-        print("You will hit a draw shot with your", entry_name_of_club, round(result_draw, 2), "% of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a draw shot with your", entry_name_of_club, round(result_draw, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
     if Push > 0:
-        print("You will hit a push shot with your", entry_name_of_club, round(result_push, 2), "% of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a push shot with your", entry_name_of_club, round(result_push, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
     if Pull > 0:
-        print("You will hit a pull shot with your", entry_name_of_club, round(result_pull, 2), "% of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a pull shot with your", entry_name_of_club, round(result_pull, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
 
 #Pie Chart for the accuracy of a golf club
 # I am having some trouble with the appearance of my graph
 def accuruacy_pie_chart(accuracy, name_of_club):
     entry_name_of_club = name_of_club.get()
-    print(entry_name_of_club)
     entry_accuracy = accuracy.get()
 
     # Counter for the occurrences of the different accuracies in the entry
@@ -162,10 +194,9 @@ def accuruacy_pie_chart(accuracy, name_of_club):
     explode = (0, 0.1, 0, 0, 0, 0)
 
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
     ax1.axis('equal')
-    plt.title('Accuracy of ')
+    plt.title('Accuracy of ' + entry_name_of_club)
     plt.show()
 
 def percentage_chance_of_putt():
@@ -218,23 +249,23 @@ def calculate_change_of_putt(length, amount_of_putts):
 
     # Printing result of calculations
     if result_one_putt > 0:
-        print("You will have an", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "ft away!")
+        print("You will have a", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "ft away!")
     if result_two_putt > 0:
-        print("You will have an", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "ft away!")
+        print("You will have a", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "ft away!")
     if result_three_putt > 0:
-        print("You will have an", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "ft away!")
+        print("You will have a", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "ft away!")
     if result_four_putt > 0:
-        print("You will have an", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "ft away!")
+        print("You will have a", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "ft away!")
     if result_five_putt > 0:
-        print("You will have an", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "ft away!")
+        print("You will have a", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "ft away!")
     if result_six_putt > 0:
-        print("You will have an", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "ft away!")
+        print("You will have a", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "ft away!")
     if result_seven_putt > 0:
-        print("You will have an", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "ft away!")
+        print("You will have a", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "ft away!")
     if result_eight_putt > 0:
-        print("You will have an", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "ft away!")
+        print("You will have a", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "ft away!")
     if result_nine_putt > 0:
-        print("You will have an", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "ft away!")
+        print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "ft away!")
 
 
 #Pie Chart for the percentage chance of making a putt from a certain distance
@@ -265,54 +296,9 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     plt.title("Percentage Chance of Making a Putt from " + entry_length + "ft Away")
     plt.show()
 
-def consistency_graph():
-    newWindow = Toplevel(master)
-    newWindow.title("Tracking Consistency")
-    newWindow.geometry("600x600")
-
-    golf_hole = Canvas(newWindow, bg="white", height="500")
-    golf_hole.grid(row=0, column=0)
-
-    image = Image.open(file="GolfHole.png")
-    image = image.resize((400,400), Image.ANTIALIAS)
-    # image = ImageTK.PhotoImage(image)
-    golf_hole.create_image(0, 0, image=image)
-
-    # fig, ax = plt.subplots()
-    # ax.set_xlim(0, 1)
-    # ax.set_ylim(0, 1)
-    # arr_lena = mpimg.imread('GolfHole.png')
-    # imagebox = OffsetImage(arr_lena, zoom=0.2)
-    # ab = AnnotationBbox(imagebox, (0.4, 0.6))
-    # ax.add_artist(ab)
-    # plt.grid()
-    # plt.draw()
-    # plt.savefig('add_picture_matplotlib_figure.png', bbox_inches='tight')
-    # plt.show()
-
-global golf_hole;
-
-def paint(event):
-    global golf_hole
-    newWindow = Toplevel(master)
-    newWindow.title("Tracking Consistency")
-    newWindow.geometry("600x600")
-
-
-    golf_hole = Canvas(newWindow, bg="white", height="500")
-    golf_hole.grid(row=0, column=0)
-    # Co-ordinates.
-    x1, y1, x2, y2 = (event.x - 3), (event.y - 3), (event.x + 3), (event.y + 3)
-
-    # Colour
-    Colour = "#000fff000"
-
-    # specify type of display
-    golf_hole.create_line(x1, y1, x2, y2, fill=Colour)
-def run():
-    global golf_hole
-    golf_hole.bind("<B1-Motion>", paint)
-
+# Function that calls a file to run a paint program
+def tracking_consistency():
+    runpy.run_path(path_name='Tracking_Consistency_Paint_File.py')
 
 #Place holder function for graphs
 def place_holder():
@@ -334,7 +320,7 @@ def exit_program():
 Button(master, text="Calculate Average Distance of Golf Club",command=average_distance).grid(row=4)
 Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=5)
 Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=6)
-Button(master, text="Tracking Consistency",command=run).grid(row=7)
+Button(master, text="Tracking Consistency",command=tracking_consistency).grid(row=7)
 Button(master, text="Clear",command=place_holder).grid(row=9, column=0)
 Button(master, text="Exit",command=exit_program).grid(row=9, column=1)
 Button(master, text="Open",command=place_holder).grid(row=9, column=2)
@@ -343,4 +329,5 @@ Button(master, text="Enter",command=name_user).grid(row=2, column=2)
 Button(master, text="Enter",command=date_of_user).grid(row=3, column=2)
 Button(master, text="Enter",command=user_notes).grid(row=8, column=2)
 
+outWorkbook.close()
 master.mainloop()
