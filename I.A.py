@@ -1,5 +1,5 @@
 from tkinter import *
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 # from PIL import Image, ImageTK
 # import matplotlib.image as mpimg
 import numpy as np
