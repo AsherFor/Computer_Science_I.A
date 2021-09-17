@@ -26,9 +26,10 @@ def clear_canvas():
     golf_canvas.delete('all')
 
 def screenshot():
-    image = ImageGrab.grab(bbox=(100, 200, 300, 400))
-    image.show()
-    image.save("Tracking Consistency")
+
+    filepath = 'Tracking_Consistency.png'
+    image = ImageGrab.grab()
+    image.save(filepath, 'PNG')
 
 
 #Buttons
