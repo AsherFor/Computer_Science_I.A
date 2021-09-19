@@ -4,41 +4,63 @@ from matplotlib import pyplot as plt
 # import matplotlib.image as mpimg
 import numpy as np
 # from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
-# import pandas as pd
+import pandas as pd
 import runpy
 import csv
 import xlsxwriter
 
-# Creates a csv
-with open('Golf_Statistics.csv', 'w', newline='') as f:
-    thewriter = csv.writer(f)
-    thewriter.writerow(['Name', 'Date'])
+#
+# writer2 = pd.ExcelWriter('Golf_Statistics.xlsx')
+#
+#
+# df_1 = pd.DataFrame()
+# df_2 = pd.DataFrame()
+# df_3 = pd.DataFrame()
+#
+# df_1.to_excel(writer2, sheet_name = 'Average Distance of Golf Club', index = False)
+# df_2.to_excel(writer2, sheet_name = 'Accuracy of a Golf Club', index = False)
+# df_3.to_excel(writer2, sheet_name = '% Chance of Making a Putt', index = False)
+#
+#
+# writer2.save()
+
 
 # Creates an excel file
-outWorkbook = xlsxwriter.Workbook('Average.xlsx')
-outSheet = outWorkbook.add_worksheet()
+workbook = xlsxwriter.Workbook('Golf_Statistics.xlsx')
+sheet1 = workbook.add_worksheet('Average Distance of Golf Club')
+sheet2 = workbook.add_worksheet('Accuracy of a Golf Club')
+sheet3 = workbook.add_worksheet('% Chance of Making a Putt')
 
-#Creating column titles for the average distance of a golf club
-outSheet.write("A1", "Name")
-outSheet.write("B1", "Date")
-outSheet.write("C1", "Individual Notes")
-outSheet.write("D1", "Driver")
-outSheet.write("E1", "3-Wood")
-outSheet.write("F1", "5-Wood or 2 Iron")
-outSheet.write("G1", "3 Iron or hybrid")
-outSheet.write("H1", "4 Iron")
-outSheet.write("I1", "5 Iron")
-outSheet.write("I1", "6 Iron")
-outSheet.write("J1", "7 Iron")
-outSheet.write("K1", "8 Iron")
-outSheet.write("L1", "9 Iron")
-outSheet.write("M1", "Pitching Wedge")
-outSheet.write("N1", "Gap Wedge")
-outSheet.write("O1", "Sand Wedge")
-outSheet.write("P1", "Lob Wedge")
-outSheet.write("Q1", "Putter")
 
-outSheet.write("A2", "Saw Dude")
+# Creating column titles for the average distance of a golf club
+
+column_titles_sheet1 = ['Name', 'Date']
+
+for col_num, data in enumerate(column_titles_sheet1):
+    sheet1.write(0, col_num, data)
+
+# sheet1.write("A1", "Name")
+# sheet1.write("B1", "Date")
+# sheet1.write("C1", "Individual Notes")
+# sheet1.write("D1", "Driver")
+# sheet1.write("E1", "3-Wood")
+# sheet1.write("F1", "5-Wood or 2 Iron")
+# sheet1.write("G1", "3 Iron or hybrid")
+# sheet1.write("H1", "4 Iron")
+# sheet1.write("I1", "5 Iron")
+# sheet1.write("I1", "6 Iron")
+# sheet1.write("J1", "7 Iron")
+# sheet1.write("K1", "8 Iron")
+# sheet1.write("L1", "9 Iron")
+# sheet1.write("M1", "Pitching Wedge")
+# sheet1.write("N1", "Gap Wedge")
+# sheet1.write("O1", "Sand Wedge")
+# sheet1.write("P1", "Lob Wedge")
+# sheet1.write("Q1", "Putter")
+#
+# sheet1.write("A2", "Saw Dude")
+#
+# sheet2.write("A1", "Low")
 
 
 master = Tk()
@@ -58,7 +80,6 @@ name.grid(row=2, column=1)
 def name_user():
     entry_name = name.get()
     print(entry_name)
-    outSheet.write("B2", entry_name)
 
 #Entry for Date
 Label(master, text='Date').grid(row=3)
@@ -329,5 +350,5 @@ Button(master, text="Enter",command=name_user).grid(row=2, column=2)
 Button(master, text="Enter",command=date_of_user).grid(row=3, column=2)
 Button(master, text="Enter",command=user_notes).grid(row=8, column=2)
 
-outWorkbook.close()
+workbook.close()
 master.mainloop()
