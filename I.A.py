@@ -26,14 +26,13 @@ import xlsxwriter
 
 
 # Creates an excel file
+# Creating a workbook and three sheets
 workbook = xlsxwriter.Workbook('Golf_Statistics.xlsx')
 sheet1 = workbook.add_worksheet('Average Distance of Golf Club')
 sheet2 = workbook.add_worksheet('Accuracy of a Golf Club')
 sheet3 = workbook.add_worksheet('% Chance of Making a Putt')
 
-
-# Creating column titles for the average distance of a golf club
-
+# Creating column titles for my different sheets
 column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
                         '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
 column_titles_sheet2 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
@@ -41,6 +40,7 @@ column_titles_sheet2 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', 
 column_titles_sheet3 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
                         '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
 
+# For loops that add the column titles to the sheets in order
 for col_num, data in enumerate(column_titles_sheet1):
     sheet1.write(0, col_num, data)
 
@@ -67,7 +67,7 @@ name.grid(row=2, column=1)
 def name_user():
     entry_name = name.get()
     print(entry_name)
-    sheet1.write(1, 0, entry_name)
+    sheet1.write('A1', str(entry_name))
 
 #Entry for Date
 Label(master, text='Date').grid(row=3)
