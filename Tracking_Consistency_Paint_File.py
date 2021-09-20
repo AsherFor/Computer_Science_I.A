@@ -28,7 +28,7 @@ def clear_canvas():
 def screenshot():
 
     filepath = 'Tracking_Consistency.png'
-    image = ImageGrab.grab(bbox=(1, 94, 744, 747))
+    image = ImageGrab.grab(bbox=(0,0,1600,2100))
     image.save(filepath, 'PNG')
 
 

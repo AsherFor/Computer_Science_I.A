@@ -34,34 +34,21 @@ sheet3 = workbook.add_worksheet('% Chance of Making a Putt')
 
 # Creating column titles for the average distance of a golf club
 
-column_titles_sheet1 = ['Name', 'Date']
+column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
+                        '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+column_titles_sheet2 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
+                        '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+column_titles_sheet3 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
+                        '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
 
 for col_num, data in enumerate(column_titles_sheet1):
     sheet1.write(0, col_num, data)
 
-# sheet1.write("A1", "Name")
-# sheet1.write("B1", "Date")
-# sheet1.write("C1", "Individual Notes")
-# sheet1.write("D1", "Driver")
-# sheet1.write("E1", "3-Wood")
-# sheet1.write("F1", "5-Wood or 2 Iron")
-# sheet1.write("G1", "3 Iron or hybrid")
-# sheet1.write("H1", "4 Iron")
-# sheet1.write("I1", "5 Iron")
-# sheet1.write("I1", "6 Iron")
-# sheet1.write("J1", "7 Iron")
-# sheet1.write("K1", "8 Iron")
-# sheet1.write("L1", "9 Iron")
-# sheet1.write("M1", "Pitching Wedge")
-# sheet1.write("N1", "Gap Wedge")
-# sheet1.write("O1", "Sand Wedge")
-# sheet1.write("P1", "Lob Wedge")
-# sheet1.write("Q1", "Putter")
-#
-# sheet1.write("A2", "Saw Dude")
-#
-# sheet2.write("A1", "Low")
+for col_num, data in enumerate(column_titles_sheet2):
+    sheet2.write(0, col_num, data)
 
+for col_num, data in enumerate(column_titles_sheet3):
+    sheet3.write(0, col_num, data)
 
 master = Tk()
 master.title("Golf Statistics")
@@ -80,6 +67,7 @@ name.grid(row=2, column=1)
 def name_user():
     entry_name = name.get()
     print(entry_name)
+    sheet1.write(1, 0, entry_name)
 
 #Entry for Date
 Label(master, text='Date').grid(row=3)
