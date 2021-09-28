@@ -8,6 +8,7 @@ import pandas as pd
 import runpy
 import csv
 import xlsxwriter
+from openpyxl import Workbook
 
 #
 # writer2 = pd.ExcelWriter('Golf_Statistics.xlsx')
@@ -27,28 +28,49 @@ import xlsxwriter
 
 # Creates an excel file
 # Creating a workbook and three sheets
-workbook = xlsxwriter.Workbook('Golf_Statistics.xlsx')
-sheet1 = workbook.add_worksheet('Average Distance of Golf Club')
-sheet2 = workbook.add_worksheet('Accuracy of a Golf Club')
-sheet3 = workbook.add_worksheet('% Chance of Making a Putt')
 
-# Creating column titles for my different sheets
-column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
-                        '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
-column_titles_sheet2 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
-                        '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
-column_titles_sheet3 = ['Name', 'Date', 'Driver', '3-Wood', '5-Wood or 2 Iron', '3 Iron or hybrid',
-                        '4 Iron', '5 Iron', '6 Iron', '7 Iron', '8 Iron', '9 Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+wb = Workbook()
+sheet1 = wb.active
+sheet1.title = "Average Distance of Golf Club"
+
+column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood', '3-Iron',
+                        '4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+
+sheet1['A1'] = column_titles_sheet1[0]
+sheet1['B1'] = column_titles_sheet1[1]
+sheet1['C1'] = column_titles_sheet1[2]
+sheet1['D1'] = column_titles_sheet1[3]
+sheet1['E1'] = column_titles_sheet1[4]
+sheet1['F1'] = column_titles_sheet1[5]
+sheet1['G1'] = column_titles_sheet1[6]
+sheet1['H1'] = column_titles_sheet1[7]
+sheet1['I1'] = column_titles_sheet1[8]
+sheet1['J1'] = column_titles_sheet1[9]
+sheet1['K1'] = column_titles_sheet1[10]
+sheet1['L1'] = column_titles_sheet1[11]
+sheet1['M1'] = column_titles_sheet1[12]
+sheet1['N1'] = column_titles_sheet1[13]
+sheet1['O1'] = column_titles_sheet1[14]
+sheet1['P1'] = column_titles_sheet1[15]
+sheet1['Q1'] = column_titles_sheet1[16]
+sheet1['R1'] = column_titles_sheet1[17]
+
+wb.save(filename='Golf_Statistics.xlsx')
+
+# for i in column_titles_sheet1:
+#     headers = sheet1.cell(row=1, column=1)
+#     headers.value = column_titles_sheet1[i]
+#     wb.save(filename='Golf_Statistics.xlsx')
 
 # For loops that add the column titles to the sheets in order
-for col_num, data in enumerate(column_titles_sheet1):
-    sheet1.write(0, col_num, data)
-
-for col_num, data in enumerate(column_titles_sheet2):
-    sheet2.write(0, col_num, data)
-
-for col_num, data in enumerate(column_titles_sheet3):
-    sheet3.write(0, col_num, data)
+# for col_num, data in enumerate(column_titles_sheet1):
+#     sheet1.write(0, col_num, data)
+#
+# for col_num, data in enumerate(column_titles_sheet2):
+#     sheet2.write(0, col_num, data)
+#
+# for col_num, data in enumerate(column_titles_sheet3):
+#     sheet3.write(0, col_num, data)
 
 master = Tk()
 master.title("Golf Statistics")
@@ -56,7 +78,7 @@ master.geometry("700x300")
 master.configure(background="white")
 
 #Header of the Program
-main_header = Label(master, text = "Golf Statistics")
+main_header = Label(master, text="Golf Statistics")
 main_header.config(font =("Times New Roman", 30))
 main_header.grid(row=0, column=0)
 
@@ -64,10 +86,12 @@ main_header.grid(row=0, column=0)
 Label(master, text='First Name and Last Name').grid(row=2)
 name = Entry(master)
 name.grid(row=2, column=1)
+
 def name_user():
     entry_name = name.get()
     print(entry_name)
-    sheet1.write('A1', str(entry_name))
+    sheet1['A2'] = entry_name
+    wb.save(filename='Golf_Statistics.xlsx')
 
 #Entry for Date
 Label(master, text='Date').grid(row=3)
@@ -77,12 +101,24 @@ date.grid(row=3, column=1)
 def date_of_user():
     entry_date = date.get()
     print(entry_date)
+    sheet1['B2'] = entry_date
+    wb.save(filename='Golf_Statistics.xlsx')
 
+#Individual notes about golfer
+Label(master, text='Individual notes about golfer').grid(row=8)
+notes = Entry(master)
+notes.grid(row=8, column=1)
+
+def user_notes():
+    entry_notes = notes.get()
+    print(entry_notes)
+    sheet1['C2'] = entry_notes
+    wb.save(filename='Golf_Statistics.xlsx')
 
 def average_distance():
     newWindow = Toplevel(master)
     newWindow.title("Calculate Average Distance")
-    newWindow.geometry("600x200")
+    newWindow.geometry("900x200")
     #Header
     main_header = Label(newWindow, text="Average Distance of a Golf Club")
     main_header.config(font=("Times New Roman", 20))
@@ -91,7 +127,8 @@ def average_distance():
     Button(newWindow, text="Graph", command= lambda: average_distance_bar_chart(distance, club_name)).grid(row=3, column=0)
     Button(newWindow, text="Calculate", command= lambda: claculate_average_distance(distance, club_name)).grid(row=4, column=1)
     # Label and entry for club and distance of golf shots
-    Label(newWindow, text='What Club Are You Using?').grid(row=1)
+    Label(newWindow, text='Enter one of the following clubs (Driver, 3-Wood, 5-Wood, 3-Iron, 4-Iron, 5-Iron,\n'
+                          '6-Iron, 7-Iron, 8-Iron, 9-Iron, Pitching Wedge, Gap Wdge, Sand Wedge, Lob Wedge, Putter)?').grid(row=1)
     Label(newWindow, text='Enter Distance of Golf Shots (Ex: 400 + 200 + 100)').grid(row=2)
     club_name = Entry(newWindow)
     distance = Entry(newWindow)
@@ -109,6 +146,42 @@ def claculate_average_distance(distance, club_name):
     number_of_symbols = value + 1
     average_yards = (eval(entry_distance) / number_of_symbols)
     print("You are able to hit your", entry_club_name, "an average distance of", round(average_yards, 2), "yards!")
+
+    if entry_club_name == column_titles_sheet1[3]:
+        sheet1['D2'] = average_yards
+    if entry_club_name == column_titles_sheet1[4]:
+        sheet1['E2'] = average_yards
+    if entry_club_name == column_titles_sheet1[5]:
+        sheet1['F2'] = average_yards
+    if entry_club_name == column_titles_sheet1[6]:
+        sheet1['G2'] = average_yards
+    if entry_club_name == column_titles_sheet1[7]:
+        sheet1['H2'] = average_yards
+    if entry_club_name == column_titles_sheet1[8]:
+        sheet1['I2'] = average_yards
+    if entry_club_name == column_titles_sheet1[9]:
+        sheet1['J2'] = average_yards
+    if entry_club_name == column_titles_sheet1[10]:
+        sheet1['K2'] = average_yards
+    if entry_club_name == column_titles_sheet1[11]:
+        sheet1['L2'] = average_yards
+    if entry_club_name == column_titles_sheet1[12]:
+        sheet1['M2'] = average_yards
+    if entry_club_name == column_titles_sheet1[13]:
+        sheet1['N2'] = average_yards
+    if entry_club_name == column_titles_sheet1[14]:
+        sheet1['O2'] = average_yards
+    if entry_club_name == column_titles_sheet1[15]:
+        sheet1['P2'] = average_yards
+    if entry_club_name == column_titles_sheet1[16]:
+        sheet1['Q2'] = average_yards
+    if entry_club_name == column_titles_sheet1[17]:
+        sheet1['R2'] = average_yards
+    # for i in column_titles_sheet1:
+    #     if entry_club_name != column_titles_sheet1[i]:
+    #         print("Enter a Valid Club Name")
+    wb.save(filename='Golf_Statistics.xlsx')
+
 
 def average_distance_bar_chart(distance, club_name):
     entry_distance = distance.get()
@@ -134,7 +207,7 @@ def average_distance_bar_chart(distance, club_name):
 def accuracy_of_shot():
     newWindow = Toplevel(master)
     newWindow.title("Calculate Accuracy")
-    newWindow.geometry("600x200")
+    newWindow.geometry("700x200")
     #Header
     main_header = Label(newWindow, text="Accuracy of a Golf Club")
     main_header.config(font=("Times New Roman", 20))
@@ -144,7 +217,7 @@ def accuracy_of_shot():
     Button(newWindow, text="Calculate", command= lambda: calculate_accuracy(name_of_club, accuracy)).grid(row=3, column=1)
     #Label and entry for accuracy of a shot
     Label(newWindow, text='What Club Are You Using?').grid(row=1)
-    Label(newWindow, text='Enter the type of shot you hit (hook, slice, fade, draw, push, pull)').grid(row=2)
+    Label(newWindow, text='Enter the type of shot you hit (Hook, Slice, Fade, Draw, Push, Pull)').grid(row=2)
     name_of_club = Entry(newWindow)
     accuracy = Entry(newWindow)
     name_of_club.grid(row=1, column=1)
@@ -258,23 +331,23 @@ def calculate_change_of_putt(length, amount_of_putts):
 
     # Printing result of calculations
     if result_one_putt > 0:
-        print("You will have a", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "ft away!")
+        print("You will have a", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "away!")
     if result_two_putt > 0:
-        print("You will have a", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "ft away!")
+        print("You will have a", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "away!")
     if result_three_putt > 0:
-        print("You will have a", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "ft away!")
+        print("You will have a", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "away!")
     if result_four_putt > 0:
-        print("You will have a", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "ft away!")
+        print("You will have a", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "away!")
     if result_five_putt > 0:
-        print("You will have a", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "ft away!")
+        print("You will have a", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "away!")
     if result_six_putt > 0:
-        print("You will have a", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "ft away!")
+        print("You will have a", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "away!")
     if result_seven_putt > 0:
-        print("You will have a", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "ft away!")
+        print("You will have a", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "away!")
     if result_eight_putt > 0:
-        print("You will have a", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "ft away!")
+        print("You will have a", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "away!")
     if result_nine_putt > 0:
-        print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "ft away!")
+        print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "away!")
 
 
 #Pie Chart for the percentage chance of making a putt from a certain distance
@@ -302,7 +375,7 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
     ax1.axis('equal')
-    plt.title("Percentage Chance of Making a Putt from " + entry_length + "ft Away")
+    plt.title("Percentage Chance of Making a Putt from " + entry_length + " Away")
     plt.show()
 
 # Function that calls a file to run a paint program
@@ -313,13 +386,10 @@ def tracking_consistency():
 def place_holder():
     print("hi")
 
-#Individual notes about golfer
-Label(master, text='Individual notes about golfer').grid(row=8)
-notes = Entry(master)
-notes.grid(row=8, column=1)
-def user_notes():
-    entry_notes = notes.get()
-    print(entry_notes)
+# Function to open excel file
+def open_excel_file():
+    df = pd.read_excel('Golf_Statistics.xlsx')
+    print(df)
 
 # Function to exit code
 def exit_program():
@@ -330,13 +400,11 @@ Button(master, text="Calculate Average Distance of Golf Club",command=average_di
 Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=5)
 Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=6)
 Button(master, text="Tracking Consistency",command=tracking_consistency).grid(row=7)
-Button(master, text="Clear",command=place_holder).grid(row=9, column=0)
 Button(master, text="Exit",command=exit_program).grid(row=9, column=1)
-Button(master, text="Open",command=place_holder).grid(row=9, column=2)
-Button(master, text="Download",command=place_holder).grid(row=9, column=3)
+Button(master, text="View Xlsx Data",command=open_excel_file).grid(row=9, column=2)
+Button(master, text="Download",command=place_holder).grid(row=9, column=0)
 Button(master, text="Enter",command=name_user).grid(row=2, column=2)
 Button(master, text="Enter",command=date_of_user).grid(row=3, column=2)
 Button(master, text="Enter",command=user_notes).grid(row=8, column=2)
 
-workbook.close()
 master.mainloop()

@@ -31,7 +31,6 @@ def screenshot():
     image = ImageGrab.grab(bbox=(0,0,1600,2100))
     image.save(filepath, 'PNG')
 
-
 #Buttons
 Button(master, text="Choose A Color", command=color_picker).grid()
 Button(master, text="Clear Canvas", command=clear_canvas).grid()
