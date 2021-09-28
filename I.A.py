@@ -1,76 +1,42 @@
 from tkinter import *
 from matplotlib import pyplot as plt
-# from PIL import Image, ImageTK
-# import matplotlib.image as mpimg
-import numpy as np
-# from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
 import pandas as pd
 import runpy
-import csv
-import xlsxwriter
 from openpyxl import Workbook
+from openpyxl import load_workbook
 
-#
-# writer2 = pd.ExcelWriter('Golf_Statistics.xlsx')
-#
-#
-# df_1 = pd.DataFrame()
-# df_2 = pd.DataFrame()
-# df_3 = pd.DataFrame()
-#
-# df_1.to_excel(writer2, sheet_name = 'Average Distance of Golf Club', index = False)
-# df_2.to_excel(writer2, sheet_name = 'Accuracy of a Golf Club', index = False)
-# df_3.to_excel(writer2, sheet_name = '% Chance of Making a Putt', index = False)
-#
-#
-# writer2.save()
-
-
-# Creates an excel file
-# Creating a workbook and three sheets
-
-wb = Workbook()
-sheet1 = wb.active
-sheet1.title = "Average Distance of Golf Club"
-
+main_array = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood', '3-Iron',
-                        '4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge', 'Gap Wdge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+                        '4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge',
+                        'Gap Wedge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+try:
+    wb = load_workbook('Golf_Statistics.xlsx')
+    ws = wb.worksheets[0]
+except FileNotFoundError:
+    wb = Workbook()
+    sheet1 = wb.active
+    sheet1.title = "Average Distance of Golf Club"
 
-sheet1['A1'] = column_titles_sheet1[0]
-sheet1['B1'] = column_titles_sheet1[1]
-sheet1['C1'] = column_titles_sheet1[2]
-sheet1['D1'] = column_titles_sheet1[3]
-sheet1['E1'] = column_titles_sheet1[4]
-sheet1['F1'] = column_titles_sheet1[5]
-sheet1['G1'] = column_titles_sheet1[6]
-sheet1['H1'] = column_titles_sheet1[7]
-sheet1['I1'] = column_titles_sheet1[8]
-sheet1['J1'] = column_titles_sheet1[9]
-sheet1['K1'] = column_titles_sheet1[10]
-sheet1['L1'] = column_titles_sheet1[11]
-sheet1['M1'] = column_titles_sheet1[12]
-sheet1['N1'] = column_titles_sheet1[13]
-sheet1['O1'] = column_titles_sheet1[14]
-sheet1['P1'] = column_titles_sheet1[15]
-sheet1['Q1'] = column_titles_sheet1[16]
-sheet1['R1'] = column_titles_sheet1[17]
+    sheet1['A1'] = column_titles_sheet1[0]
+    sheet1['B1'] = column_titles_sheet1[1]
+    sheet1['C1'] = column_titles_sheet1[2]
+    sheet1['D1'] = column_titles_sheet1[3]
+    sheet1['E1'] = column_titles_sheet1[4]
+    sheet1['F1'] = column_titles_sheet1[5]
+    sheet1['G1'] = column_titles_sheet1[6]
+    sheet1['H1'] = column_titles_sheet1[7]
+    sheet1['I1'] = column_titles_sheet1[8]
+    sheet1['J1'] = column_titles_sheet1[9]
+    sheet1['K1'] = column_titles_sheet1[10]
+    sheet1['L1'] = column_titles_sheet1[11]
+    sheet1['M1'] = column_titles_sheet1[12]
+    sheet1['N1'] = column_titles_sheet1[13]
+    sheet1['O1'] = column_titles_sheet1[14]
+    sheet1['P1'] = column_titles_sheet1[15]
+    sheet1['Q1'] = column_titles_sheet1[16]
+    sheet1['R1'] = column_titles_sheet1[17]
 
-wb.save(filename='Golf_Statistics.xlsx')
-
-# for i in column_titles_sheet1:
-#     headers = sheet1.cell(row=1, column=1)
-#     headers.value = column_titles_sheet1[i]
-#     wb.save(filename='Golf_Statistics.xlsx')
-
-# For loops that add the column titles to the sheets in order
-# for col_num, data in enumerate(column_titles_sheet1):
-#     sheet1.write(0, col_num, data)
-#
-# for col_num, data in enumerate(column_titles_sheet2):
-#     sheet2.write(0, col_num, data)
-#
-# for col_num, data in enumerate(column_titles_sheet3):
-#     sheet3.write(0, col_num, data)
+    wb.save(filename='Golf_Statistics.xlsx')
 
 master = Tk()
 master.title("Golf Statistics")
@@ -87,11 +53,11 @@ Label(master, text='First Name and Last Name').grid(row=2)
 name = Entry(master)
 name.grid(row=2, column=1)
 
+
 def name_user():
     entry_name = name.get()
-    print(entry_name)
-    sheet1['A2'] = entry_name
-    wb.save(filename='Golf_Statistics.xlsx')
+    main_array.insert(0, entry_name)
+    print(main_array)
 
 #Entry for Date
 Label(master, text='Date').grid(row=3)
@@ -100,9 +66,8 @@ date.grid(row=3, column=1)
 
 def date_of_user():
     entry_date = date.get()
-    print(entry_date)
-    sheet1['B2'] = entry_date
-    wb.save(filename='Golf_Statistics.xlsx')
+    main_array.insert(1, entry_date)
+    print(main_array)
 
 #Individual notes about golfer
 Label(master, text='Individual notes about golfer').grid(row=8)
@@ -111,9 +76,8 @@ notes.grid(row=8, column=1)
 
 def user_notes():
     entry_notes = notes.get()
-    print(entry_notes)
-    sheet1['C2'] = entry_notes
-    wb.save(filename='Golf_Statistics.xlsx')
+    main_array.insert(2, entry_notes)
+    print(main_array)
 
 def average_distance():
     newWindow = Toplevel(master)
@@ -148,39 +112,35 @@ def claculate_average_distance(distance, club_name):
     print("You are able to hit your", entry_club_name, "an average distance of", round(average_yards, 2), "yards!")
 
     if entry_club_name == column_titles_sheet1[3]:
-        sheet1['D2'] = average_yards
+        main_array.insert(3, average_yards)
     if entry_club_name == column_titles_sheet1[4]:
-        sheet1['E2'] = average_yards
+        main_array.insert(4, average_yards)
     if entry_club_name == column_titles_sheet1[5]:
-        sheet1['F2'] = average_yards
+        main_array.insert(5, average_yards)
     if entry_club_name == column_titles_sheet1[6]:
-        sheet1['G2'] = average_yards
+        main_array.insert(6, average_yards)
     if entry_club_name == column_titles_sheet1[7]:
-        sheet1['H2'] = average_yards
+        main_array.insert(7, average_yards)
     if entry_club_name == column_titles_sheet1[8]:
-        sheet1['I2'] = average_yards
+        main_array.insert(8, average_yards)
     if entry_club_name == column_titles_sheet1[9]:
-        sheet1['J2'] = average_yards
+        main_array.insert(9, average_yards)
     if entry_club_name == column_titles_sheet1[10]:
-        sheet1['K2'] = average_yards
+        main_array.insert(10, average_yards)
     if entry_club_name == column_titles_sheet1[11]:
-        sheet1['L2'] = average_yards
+        main_array.insert(11, average_yards)
     if entry_club_name == column_titles_sheet1[12]:
-        sheet1['M2'] = average_yards
+        main_array.insert(12, average_yards)
     if entry_club_name == column_titles_sheet1[13]:
-        sheet1['N2'] = average_yards
+        main_array.insert(13, average_yards)
     if entry_club_name == column_titles_sheet1[14]:
-        sheet1['O2'] = average_yards
+        main_array.insert(14, average_yards)
     if entry_club_name == column_titles_sheet1[15]:
-        sheet1['P2'] = average_yards
+        main_array.insert(15, average_yards)
     if entry_club_name == column_titles_sheet1[16]:
-        sheet1['Q2'] = average_yards
+        main_array.insert(16, average_yards)
     if entry_club_name == column_titles_sheet1[17]:
-        sheet1['R2'] = average_yards
-    # for i in column_titles_sheet1:
-    #     if entry_club_name != column_titles_sheet1[i]:
-    #         print("Enter a Valid Club Name")
-    wb.save(filename='Golf_Statistics.xlsx')
+        main_array.insert(17, average_yards)
 
 
 def average_distance_bar_chart(distance, club_name):
@@ -392,7 +352,10 @@ def open_excel_file():
     print(df)
 
 # Function to exit code
-def exit_program():
+def save_exit():
+    sheet1 = wb.worksheets[0]
+    sheet1.append(main_array)
+    wb.save(filename='Golf_Statistics.xlsx')
     exit()
 
 #Buttons
@@ -400,7 +363,7 @@ Button(master, text="Calculate Average Distance of Golf Club",command=average_di
 Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=5)
 Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=6)
 Button(master, text="Tracking Consistency",command=tracking_consistency).grid(row=7)
-Button(master, text="Exit",command=exit_program).grid(row=9, column=1)
+Button(master, text="Save and Exit",command=save_exit).grid(row=9, column=1)
 Button(master, text="View Xlsx Data",command=open_excel_file).grid(row=9, column=2)
 Button(master, text="Download",command=place_holder).grid(row=9, column=0)
 Button(master, text="Enter",command=name_user).grid(row=2, column=2)
