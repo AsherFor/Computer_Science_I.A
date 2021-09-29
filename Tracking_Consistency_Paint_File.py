@@ -26,10 +26,8 @@ def clear_canvas():
     golf_canvas.delete('all')
 
 def screenshot():
-
-    filepath = 'Tracking_Consistency.png'
     image = ImageGrab.grab(bbox=(0,0,1600,2100))
-    image.save(filepath, 'PNG')
+    image.show()
 
 #Buttons
 Button(master, text="Choose A Color", command=color_picker).grid()
