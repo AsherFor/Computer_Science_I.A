@@ -10,9 +10,9 @@ golf_canvas = Canvas(master, width=700, height=700)
 
 global choose_color;
 
-def paint(event):
+def paint(tracker):
     global choose_color
-    x1, y1, x2, y2 = (event.x - 3), (event.y - 3), (event.x + 3), (event.y + 3)
+    x1, y1, x2, y2 = (tracker.x - 3), (tracker.y - 3), (tracker.x + 3), (tracker.y + 3)
 
     color = str(choose_color)
 
