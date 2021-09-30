@@ -1,4 +1,4 @@
-from tkinter import *
+from openwindow import *
 from matplotlib import pyplot as plt
 import numpy as np
 
