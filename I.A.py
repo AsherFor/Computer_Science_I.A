@@ -4,8 +4,6 @@ import pandas as pd
 import runpy
 from openpyxl import Workbook
 from openpyxl import load_workbook
-from tkinter import scrolledtext
-
 
 main_array = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood', '3-Iron', '4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge', 'Gap Wedge', 'Sand Wedge', 'Lob Wedge', 'Putter']
@@ -408,13 +406,6 @@ def read_excel_file():
     df = pd.read_excel('Golf_Statistics.xlsx')
     print(df)
 
-#Work in progress
-# df = pd.read_excel ('Golf_Statistics.xlsx')
-# def sample_gcode():
-#     Label(master, text="Gcode", anchor="w", bg="gray20", fg="lime green", font=('Helvetica', '12')).place(x=1290, y=560, height=20,width=100)
-#     Gcode_Text = scrolledtext.ScrolledText(master, bg='white', relief=GROOVE, font='TkFixedFont')
-#     Gcode_Text.insert(INSERT, df)
-#     Gcode_Text.place(x=1290, y=580, height=120, width=200)
 
 #Function to save data to an excel file and to exit the code
 def save_exit():
