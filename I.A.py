@@ -138,7 +138,6 @@ def claculate_average_distance(distance, club_name):
         if x == '+':
             value = value + 1
 
-
     # Makes sure the user uses '+' character in input
     if value == 0:
         distance.delete(0, END)
@@ -236,14 +235,6 @@ def calculate_accuracy(name_of_club, accuracy):
     entry_name_of_club = name_of_club.get()
     entry_accuracy = accuracy.get()
 
-    options = ["Hook", "Slice", "Fade", "Draw", "Push", "Pull"]
-
-    # Makes sure the user only uses values in options
-    if entry_accuracy not in options:
-        messagebox.showinfo("showinfo", "Bad Input")
-        accuracy.delete(0, END)
-
-
     # Counting the amount of occurrences of each type of shot
     Hook = entry_accuracy.count("Hook")
     Slice = entry_accuracy.count("Slice")
@@ -251,10 +242,6 @@ def calculate_accuracy(name_of_club, accuracy):
     Draw = entry_accuracy.count("Draw")
     Push = entry_accuracy.count("Push")
     Pull = entry_accuracy.count("Pull")
-
-    # if Hook != 0 and Slice != 0 and Fade != 0 and Draw != 0 and Push != 0:
-    #     messagebox.showinfo("showinfo", "Bad Input")
-    #     entry_accuracy.delete(0, END)
 
     # Calculating the percentage of hitting a certain accuracy shot
     result_hook = (Hook / len(entry_accuracy.split()) * 100)
@@ -406,7 +393,6 @@ def calculate_change_of_putt(length, amount_of_putts):
         print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length,
               "away!")
 
-
 # Pie Chart for the percentage chance of making a putt from a certain distance
 def chance_of_making_putt_pie_chart(length, amount_of_putts):
     entry_length = length.get()
@@ -460,17 +446,14 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     plt.title("Percentage Chance of Making a Putt from " + entry_length + " Away")
     plt.show()
 
-
 # Function that calls a file to run a paint program
 def tracking_consistency():
     runpy.run_path(path_name='Tracking_Consistency_Paint_File.py')
-
 
 # Function to read excel file
 def read_excel_file():
     df = pd.read_excel('Golf_Statistics.xlsx')
     print(df)
-
 
 # Function to save data to an excel file and to exit the code
 def save_exit():
@@ -478,7 +461,6 @@ def save_exit():
     sheet1.append(main_array)
     wb.save(filename='Golf_Statistics.xlsx')
     exit()
-
 
 # Buttons
 Button(master, text="Calculate Average Distance of Golf Club", command=average_distance).grid(row=4)
@@ -490,5 +472,4 @@ Button(master, text="View Golf Data", command=read_excel_file).grid(row=9, colum
 Button(master, text="Enter", command=name_user).grid(row=2, column=2)
 Button(master, text="Enter", command=date_of_user).grid(row=3, column=2)
 Button(master, text="Enter", command=user_notes).grid(row=8, column=2)
-
 master.mainloop()
