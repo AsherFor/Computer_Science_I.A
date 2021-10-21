@@ -1,25 +1,36 @@
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
-```bash
-pip install foobar
-```
+Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
 
-## Usage
+Run setup.py: sudo python3 setup.py install
 
-```python
-import foobar
+Wait for build folder to appear
 
-# returns 'words'
-foobar.pluralize('word')
+Run I.A.py: python3 I.A.py
 
-# returns 'geese'
-foobar.pluralize('goose')
+## Manual Installation
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
+Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
+
+Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
+
+Pip install libraries:  
+
+* pip install pandas
+* pip install pyscreenshot
+* pip install future
+* pip install matplotlib
+* pip install openpyxl
+* pip install setuptools
+* pip install numpy
+
+Run I.A.py: python3 I.A.py
+
+## Bugs
+
+With tkinter on MacOS, the program might break if you are using dark mode. You might have to change your MacOS appearance to light mode.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
