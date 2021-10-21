@@ -5,12 +5,14 @@ import pyscreenshot as ImageGrab
 
 master = Tk()
 
+# Creates GUI
 master.title("Tracking Golf Shot Consistency")
 master.geometry("750x750")
 golf_canvas = Canvas(master, width=700, height=700)
 
 global choose_color;
 
+# Function to paint with mouse pointer
 def paint(tracker):
     global choose_color
 
@@ -20,13 +22,16 @@ def paint(tracker):
 
     golf_canvas.create_oval(x1, y1, x2, y2, fill=color, outline=color)
 
+# Function to choose a color
 def color_picker():
     global choose_color
     choose_color = colorchooser.askcolor()[1]
 
+# Function to clear the canvas
 def clear_canvas():
     golf_canvas.delete('all')
 
+# Function to take a screenshot
 def screenshot():
     image = ImageGrab.grab(bbox=(0,0,1600,2100))
     image.show()
