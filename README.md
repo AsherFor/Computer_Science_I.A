@@ -1,25 +1,17 @@
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
-```bash
-pip install foobar
-```
+Run setup.py
 
-## Usage
+Wait for build folder to appear
 
-```python
-import foobar
+Run I.A.py
 
-# returns 'words'
-foobar.pluralize('word')
+## Bugs
 
-# returns 'geese'
-foobar.pluralize('goose')
+With tkinter on MacOS, you can't be in 
 
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
