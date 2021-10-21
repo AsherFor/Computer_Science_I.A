@@ -18,13 +18,13 @@ Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
 
 Pip install libraries:  
 
-pip install pandas
-pip install pyscreenshot
-pip install future
-pip install matplotlib
-pip install openpyxl
-pip install setuptools
-pip install numpy
+* pip install pandas
+* pip install pyscreenshot
+* pip install future
+* pip install matplotlib
+* pip install openpyxl
+* pip install setuptools
+* pip install numpy
 
 Run I.A.py: python3 I.A.py
 
