@@ -1,19 +1,30 @@
+# Library for creating GUI and different aspects within
 from tkinter import *
+from tkinter import messagebox
+from tkinter import colorchooser
+# Library for making graphs with different data
 from matplotlib import pyplot as plt
+# Library for putting certain golf data into a dataframe
 import pandas as pd
+# Library for running a separate python file
 import runpy
+# Library for using excel files
 from openpyxl import Workbook
 from openpyxl import load_workbook
+# Library for taking a screenshot
+import pyscreenshot as ImageGrab
 
 main_array = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood', '3-Iron', '4-Iron', '5-Iron', '6-Iron', '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge', 'Gap Wedge', 'Sand Wedge', 'Lob Wedge', 'Putter']
+column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood', '3-Iron', '4-Iron', '5-Iron', '6-Iron',
+                        '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge', 'Gap Wedge', 'Sand Wedge', 'Lob Wedge',
+                        'Putter']
 
-#Loading my excel file if it is already created
+# Loading my excel file if it is already created
 try:
     wb = load_workbook('Golf_Statistics.xlsx')
     ws = wb.worksheets[0]
 
-#Creates excel file
+# Creates excel file
 except FileNotFoundError:
     wb = Workbook()
     sheet1 = wb.active
@@ -40,18 +51,18 @@ except FileNotFoundError:
 
     wb.save(filename='Golf_Statistics.xlsx')
 
-#Main page of my tkinter GUI
+# Main page of  GUI
 master = Tk()
 master.title("Golf Statistics")
 master.geometry("700x300")
 master.configure(background="white")
 
-#Header of the Program
+# Header of the Program
 main_header = Label(master, text="Golf Statistics")
-main_header.config(font =("Times New Roman", 30))
+main_header.config(font=("Times New Roman", 30))
 main_header.grid(row=0, column=0)
 
-#Entry for name
+# Entry for name
 Label(master, text='First Name and Last Name').grid(row=2)
 name = Entry(master)
 name.grid(row=2, column=1)
@@ -61,39 +72,44 @@ def name_user():
     entry_name = name.get()
     main_array[0] = entry_name
 
-#Entry for Date
+
+# Entry for Date
 Label(master, text='Date').grid(row=3)
 date = Entry(master)
 date.grid(row=3, column=1)
+
 
 def date_of_user():
     entry_date = date.get()
     main_array[1] = entry_date
 
-#Individual notes about golfer
+
+# Individual notes about golfer
 Label(master, text='Individual notes about golfer').grid(row=8)
 notes = Entry(master)
 notes.grid(row=8, column=1)
+
 
 def user_notes():
     entry_notes = notes.get()
     main_array[2] = entry_notes
 
-#Opens new GUI window to calculate the average distance of a golf club
+
+# Opens new GUI window to calculate the average distance of a golf club
 def average_distance():
-    #Main window
+    # Main window
     newWindow = Toplevel(master)
     newWindow.title("Calculate Average Distance")
     newWindow.geometry("900x200")
 
-    #Header
+    # Header
     main_header = Label(newWindow, text="Average Distance of a Golf Club")
     main_header.config(font=("Times New Roman", 20))
     main_header.grid(row=0, column=0)
 
-    #Buttons
-    Button(newWindow, text="Graph", command= lambda: average_distance_bar_chart(distance, club_name)).grid(row=3, column=0)
-    Button(newWindow, text="Calculate", command= lambda: claculate_average_distance(distance, club_name)).grid(row=3, column=1)
+    # Buttons
+    Button(newWindow, text="Graph", command=lambda: average_distance_bar_chart(distance, club_name)).grid(row=3,column=0)
+    Button(newWindow, text="Calculate", command=lambda: claculate_average_distance(distance, club_name)).grid(row=3,column=1)
 
     # Label and entry for club and distance of golf shots
     Label(newWindow, text='Enter one of the following clubs (Driver, 3-Wood, 5-Wood, 3-Iron, 4-Iron, 5-Iron,\n'
@@ -104,21 +120,35 @@ def average_distance():
     club_name.grid(row=1, column=1)
     distance.grid(row=2, column=1)
 
-#Calculations of the average distance of a golf club
+
+# Calculations of the average distance of a golf club
 def claculate_average_distance(distance, club_name):
     entry_club_name = club_name.get()
     entry_distance = distance.get()
+
+    while entry_club_name not in column_titles_sheet1:
+        club_name.delete(0, END)
+        # pop up window
+        messagebox.showinfo("showinfo", "Bad Input, Type a Valid Input")
+        break
 
     # This is a for loop to count the amount of times the + character is in the entry for distance
     value = 0
     for x in entry_distance:
         if x == '+':
             value = value + 1
+
+
+    # Makes sure the user uses '+' character in input
+    if value == 0:
+        distance.delete(0, END)
+        messagebox.showinfo("showinfo", "Bad Input, Look at the Example")
+
     number_of_symbols = value + 1
     average_yards = (eval(entry_distance) / number_of_symbols)
     print("You are able to hit your", entry_club_name, "an average distance of", round(average_yards, 2), "yards!")
 
-   #The following if statements checks the club name the user entered matches a column title, and then assigns the average distance to the main array
+    # The following if statements checks the club name the user entered matches a column title, and then assigns the average distance to the main array
     if entry_club_name == column_titles_sheet1[3]:
         main_array[3] = average_yards
     if entry_club_name == column_titles_sheet1[4]:
@@ -150,7 +180,8 @@ def claculate_average_distance(distance, club_name):
     if entry_club_name == column_titles_sheet1[17]:
         main_array[17] = average_yards
 
-#The bar chart for the average distance of a golf club
+
+# The bar chart for the average distance of a golf club
 def average_distance_bar_chart(distance, club_name):
     entry_distance = distance.get()
     entry_club_name = club_name.get()
@@ -173,23 +204,25 @@ def average_distance_bar_chart(distance, club_name):
 
     plt.show()
 
-#Opens new GUI window to calculate the percentage chance of hitting a certain accuracy with a specific club
+
+# Opens new GUI window to calculate the percentage chance of hitting a certain accuracy with a specific club
 def accuracy_of_shot():
-    #Main Window
+    # Main Window
     newWindow = Toplevel(master)
     newWindow.title("Calculate Accuracy")
     newWindow.geometry("700x200")
 
-    #Header
+    # Header
     main_header = Label(newWindow, text="Accuracy of a Golf Club")
     main_header.config(font=("Times New Roman", 20))
     main_header.grid(row=0, column=0)
 
-    #Buttons
-    Button(newWindow, text="Graph", command= lambda: accuruacy_pie_chart(accuracy, name_of_club)).grid(row=3, column=0)
-    Button(newWindow, text="Calculate", command= lambda: calculate_accuracy(name_of_club, accuracy)).grid(row=3, column=1)
+    # Buttons
+    Button(newWindow, text="Graph", command=lambda: accuruacy_pie_chart(accuracy, name_of_club)).grid(row=3, column=0)
+    Button(newWindow, text="Calculate", command=lambda: calculate_accuracy(name_of_club, accuracy)).grid(row=3,
+                                                                                                         column=1)
 
-    #Label and entry for accuracy of a shot
+    # Label and entry for accuracy of a shot
     Label(newWindow, text='What Club Are You Using?').grid(row=1)
     Label(newWindow, text='Enter the type of shot you hit (Hook, Slice, Fade, Draw, Push, Pull)').grid(row=2)
     name_of_club = Entry(newWindow)
@@ -197,18 +230,31 @@ def accuracy_of_shot():
     name_of_club.grid(row=1, column=1)
     accuracy.grid(row=2, column=1)
 
-#Calculations of the accuracy of a golf club
+
+# Calculations of the accuracy of a golf club
 def calculate_accuracy(name_of_club, accuracy):
     entry_name_of_club = name_of_club.get()
     entry_accuracy = accuracy.get()
 
-    #Counting the amount of occurrences of each type of shot
+    options = ["Hook", "Slice", "Fade", "Draw", "Push", "Pull"]
+
+    # Makes sure the user only uses values in options
+    if entry_accuracy not in options:
+        messagebox.showinfo("showinfo", "Bad Input")
+        accuracy.delete(0, END)
+
+
+    # Counting the amount of occurrences of each type of shot
     Hook = entry_accuracy.count("Hook")
     Slice = entry_accuracy.count("Slice")
     Fade = entry_accuracy.count("Fade")
     Draw = entry_accuracy.count("Draw")
     Push = entry_accuracy.count("Push")
     Pull = entry_accuracy.count("Pull")
+
+    # if Hook != 0 and Slice != 0 and Fade != 0 and Draw != 0 and Push != 0:
+    #     messagebox.showinfo("showinfo", "Bad Input")
+    #     entry_accuracy.delete(0, END)
 
     # Calculating the percentage of hitting a certain accuracy shot
     result_hook = (Hook / len(entry_accuracy.split()) * 100)
@@ -218,26 +264,33 @@ def calculate_accuracy(name_of_club, accuracy):
     result_push = (Push / len(entry_accuracy.split()) * 100)
     result_pull = (Pull / len(entry_accuracy.split()) * 100)
 
-    #If statements to check if a person inputed one of the type of accuracies, to then print the result of the calculation
+    # If statements to check if a person inputed one of the type of accuracies, to then print the result of the calculation
     if Hook > 0:
-        print("You will hit a hook shot with your", entry_name_of_club, round(result_hook, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a hook shot with your", entry_name_of_club, round(result_hook, 2), "% of the time out of",
+              len(entry_accuracy.split()), "shots!")
     if Slice > 0:
-        print("You will hit a slice shot with your", entry_name_of_club, round(result_slice, 2), "%% of the time out of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a slice shot with your", entry_name_of_club, round(result_slice, 2),
+              "%% of the time out of", len(entry_accuracy.split()), "shots!")
     if Fade > 0:
-        print("You will hit a fade shot with your", entry_name_of_club, round(result_fade, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a fade shot with your", entry_name_of_club, round(result_fade, 2), "% of the time out of",
+              len(entry_accuracy.split()), "shots!")
     if Draw > 0:
-        print("You will hit a draw shot with your", entry_name_of_club, round(result_draw, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a draw shot with your", entry_name_of_club, round(result_draw, 2), "% of the time out of",
+              len(entry_accuracy.split()), "shots!")
     if Push > 0:
-        print("You will hit a push shot with your", entry_name_of_club, round(result_push, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a push shot with your", entry_name_of_club, round(result_push, 2), "% of the time out of",
+              len(entry_accuracy.split()), "shots!")
     if Pull > 0:
-        print("You will hit a pull shot with your", entry_name_of_club, round(result_pull, 2), "% of the time out of", len(entry_accuracy.split()), "shots!")
+        print("You will hit a pull shot with your", entry_name_of_club, round(result_pull, 2), "% of the time out of",
+              len(entry_accuracy.split()), "shots!")
 
-#Pie Chart for the accuracy of a golf club
+
+# Pie Chart for the accuracy of a golf club
 def accuruacy_pie_chart(accuracy, name_of_club):
     entry_name_of_club = name_of_club.get()
     entry_accuracy = accuracy.get()
 
-    #Counter for the occurrences of the different accuracies in the entry
+    # Counter for the occurrences of the different accuracies in the entry
     Hook = entry_accuracy.count("Hook")
     Slice = entry_accuracy.count("Slice")
     Fade = entry_accuracy.count("Fade")
@@ -245,7 +298,7 @@ def accuruacy_pie_chart(accuracy, name_of_club):
     Push = entry_accuracy.count("Push")
     Pull = entry_accuracy.count("Pull")
 
-    #If statements that will append values to arrays if there is an occurence of one of the accuracies in the users entry
+    # If statements that will append values to arrays if there is an occurence of one of the accuracies in the users entry
     labels = []
     sizes = []
     if Hook > 0:
@@ -273,9 +326,10 @@ def accuruacy_pie_chart(accuracy, name_of_club):
     plt.title('Accuracy of ' + entry_name_of_club)
     plt.show()
 
-#Opens new GUI window to calculate the percentage chance of making a putt at a certain distance
+
+# Opens new GUI window to calculate the percentage chance of making a putt at a certain distance
 def percentage_chance_of_putt():
-    #Main window
+    # Main window
     newWindow = Toplevel(master)
     newWindow.title("Calculate Chance of Making a Putt")
     newWindow.geometry("700x200")
@@ -286,8 +340,10 @@ def percentage_chance_of_putt():
     main_header.grid(row=0, column=0)
 
     # Buttons
-    Button(newWindow, text="Graph", command=lambda: chance_of_making_putt_pie_chart(length, amount_of_putts)).grid(row=3, column=0)
-    Button(newWindow, text="Calculate", command=lambda: calculate_change_of_putt(length, amount_of_putts)).grid(row=3, column=1)
+    Button(newWindow, text="Graph", command=lambda: chance_of_making_putt_pie_chart(length, amount_of_putts)).grid(
+        row=3, column=0)
+    Button(newWindow, text="Calculate", command=lambda: calculate_change_of_putt(length, amount_of_putts)).grid(row=3,
+                                                                                                                column=1)
 
     # Label and entry for percentage chance of making a putt
     Label(newWindow, text='Length from the hole(10ft, 5ft, 1ft, etc)').grid(row=1)
@@ -297,11 +353,12 @@ def percentage_chance_of_putt():
     length.grid(row=1, column=1)
     amount_of_putts.grid(row=2, column=1)
 
+
 def calculate_change_of_putt(length, amount_of_putts):
     entry_length = length.get()
     entry_amount_of_putts = amount_of_putts.get()
 
-    #Counting the amount of putts inputted
+    # Counting the amount of putts inputted
     One_Putt = entry_amount_of_putts.count("1")
     Two_Putt = entry_amount_of_putts.count("2")
     Three_Putt = entry_amount_of_putts.count("3")
@@ -312,7 +369,7 @@ def calculate_change_of_putt(length, amount_of_putts):
     Eight_Putt = entry_amount_of_putts.count("8")
     Nine_Putt = entry_amount_of_putts.count("9")
 
-    #Calculating the percentages of making a putt
+    # Calculating the percentages of making a putt
     result_one_putt = (One_Putt / len(entry_amount_of_putts.split()) * 100)
     result_two_putt = (Two_Putt / len(entry_amount_of_putts.split()) * 100)
     result_three_putt = (Three_Putt / len(entry_amount_of_putts.split()) * 100)
@@ -323,25 +380,31 @@ def calculate_change_of_putt(length, amount_of_putts):
     result_eight_putt = (Eight_Putt / len(entry_amount_of_putts.split()) * 100)
     result_nine_putt = (Nine_Putt / len(entry_amount_of_putts.split()) * 100)
 
-    #If statements to check if a person inputed a certain amount of putts, to then print the result of the calculation
+    # If statements to check if a person inputed a certain amount of putts, to then print the result of the calculation
     if result_one_putt > 0:
         print("You will have a", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "away!")
     if result_two_putt > 0:
         print("You will have a", round(result_two_putt, 2), "% change of making a two putt from", entry_length, "away!")
     if result_three_putt > 0:
-        print("You will have a", round(result_three_putt, 2), "% change of making a three putt from", entry_length, "away!")
+        print("You will have a", round(result_three_putt, 2), "% change of making a three putt from", entry_length,
+              "away!")
     if result_four_putt > 0:
-        print("You will have a", round(result_four_putt, 2), "% change of making a four putt from", entry_length, "away!")
+        print("You will have a", round(result_four_putt, 2), "% change of making a four putt from", entry_length,
+              "away!")
     if result_five_putt > 0:
-        print("You will have a", round(result_five_putt, 2), "% change of making a five putt from", entry_length, "away!")
+        print("You will have a", round(result_five_putt, 2), "% change of making a five putt from", entry_length,
+              "away!")
     if result_six_putt > 0:
         print("You will have a", round(result_six_putt, 2), "% change of making a six putt from", entry_length, "away!")
     if result_seven_putt > 0:
-        print("You will have a", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length, "away!")
+        print("You will have a", round(result_seven_putt, 2), "% change of making a seven putt from", entry_length,
+              "away!")
     if result_eight_putt > 0:
-        print("You will have a", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length, "away!")
+        print("You will have a", round(result_eight_putt, 2), "% change of making a eight putt from", entry_length,
+              "away!")
     if result_nine_putt > 0:
-        print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length, "away!")
+        print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length,
+              "away!")
 
 
 # Pie Chart for the percentage chance of making a putt from a certain distance
@@ -360,7 +423,7 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     Eight_Putt = entry_amount_of_putts.count("8")
     Nine_Putt = entry_amount_of_putts.count("9")
 
-    #If statements that will append values to arrays if there is an occurence of one of the number of putts it took to make it into the hole
+    # If statements that will append values to arrays if there is an occurence of one of the number of putts it took to make it into the hole
     labels = []
     sizes = []
     if One_Putt > 0:
@@ -397,32 +460,35 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     plt.title("Percentage Chance of Making a Putt from " + entry_length + " Away")
     plt.show()
 
-#Function that calls a file to run a paint program
+
+# Function that calls a file to run a paint program
 def tracking_consistency():
     runpy.run_path(path_name='Tracking_Consistency_Paint_File.py')
 
-#Function to read excel file
+
+# Function to read excel file
 def read_excel_file():
     df = pd.read_excel('Golf_Statistics.xlsx')
     print(df)
 
 
-#Function to save data to an excel file and to exit the code
+# Function to save data to an excel file and to exit the code
 def save_exit():
     sheet1 = wb.worksheets[0]
     sheet1.append(main_array)
     wb.save(filename='Golf_Statistics.xlsx')
     exit()
 
-#Buttons
-Button(master, text="Calculate Average Distance of Golf Club",command=average_distance).grid(row=4)
-Button(master, text="Calculate the Accuracy of a Golf Club",command=accuracy_of_shot).grid(row=5)
-Button(master, text="Calculate the Percentage Chance of Making a Putt",command=percentage_chance_of_putt).grid(row=6)
-Button(master, text="Tracking Consistency",command=tracking_consistency).grid(row=7)
-Button(master, text="Save and Exit",command=save_exit).grid(row=9, column=1)
-Button(master, text="View Xlsx Data",command=read_excel_file).grid(row=9, column=0)
-Button(master, text="Enter",command=name_user).grid(row=2, column=2)
-Button(master, text="Enter",command=date_of_user).grid(row=3, column=2)
-Button(master, text="Enter",command=user_notes).grid(row=8, column=2)
+
+# Buttons
+Button(master, text="Calculate Average Distance of Golf Club", command=average_distance).grid(row=4)
+Button(master, text="Calculate the Accuracy of a Golf Club", command=accuracy_of_shot).grid(row=5)
+Button(master, text="Calculate the Percentage Chance of Making a Putt", command=percentage_chance_of_putt).grid(row=6)
+Button(master, text="Tracking Consistency", command=tracking_consistency).grid(row=7)
+Button(master, text="Save and Exit", command=save_exit).grid(row=9, column=1)
+Button(master, text="View Golf Data", command=read_excel_file).grid(row=9, column=0)
+Button(master, text="Enter", command=name_user).grid(row=2, column=2)
+Button(master, text="Enter", command=date_of_user).grid(row=3, column=2)
+Button(master, text="Enter", command=user_notes).grid(row=8, column=2)
 
 master.mainloop()

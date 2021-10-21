@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import colorchooser
+# Library for taking a screenshot
 import pyscreenshot as ImageGrab
 
 master = Tk()
