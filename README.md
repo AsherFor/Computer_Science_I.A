@@ -10,8 +10,7 @@ Run I.A.py
 
 ## Bugs
 
-With tkinter on MacOS, you can't be in 
-
+With tkinter on MacOS, the program might break if you are using dark mode. So, you might have to change your MacOS appearance to light mode.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
