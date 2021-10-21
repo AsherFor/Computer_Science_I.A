@@ -13,6 +13,7 @@ global choose_color;
 
 def paint(tracker):
     global choose_color
+
     x1, y1, x2, y2 = (tracker.x - 3), (tracker.y - 3), (tracker.x + 3), (tracker.y + 3)
 
     color = str(choose_color)

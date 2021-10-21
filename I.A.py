@@ -126,6 +126,7 @@ def claculate_average_distance(distance, club_name):
     entry_club_name = club_name.get()
     entry_distance = distance.get()
 
+    # Loop to make sure entry is valid
     while entry_club_name not in column_titles_sheet1:
         club_name.delete(0, END)
         # pop up window
@@ -193,6 +194,7 @@ def average_distance_bar_chart(distance, club_name):
     number_of_symbols = value + 1
     average_yards = (eval(entry_distance) / number_of_symbols)
 
+    # Graph creation
     plt.barh([entry_club_name], [round(average_yards, 2)], align='center', label="Distance")
     plt.legend()
 
@@ -307,6 +309,7 @@ def accuruacy_pie_chart(accuracy, name_of_club):
         sizes.append(Pull)
         labels.append("Pull")
 
+    # Graph creation
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     ax1.axis('equal')
@@ -327,10 +330,8 @@ def percentage_chance_of_putt():
     main_header.grid(row=0, column=0)
 
     # Buttons
-    Button(newWindow, text="Graph", command=lambda: chance_of_making_putt_pie_chart(length, amount_of_putts)).grid(
-        row=3, column=0)
-    Button(newWindow, text="Calculate", command=lambda: calculate_change_of_putt(length, amount_of_putts)).grid(row=3,
-                                                                                                                column=1)
+    Button(newWindow, text="Graph", command=lambda: chance_of_making_putt_pie_chart(length, amount_of_putts)).grid(row=3, column=0)
+    Button(newWindow, text="Calculate", command=lambda: calculate_change_of_putt(length, amount_of_putts)).grid(row=3, column=1)
 
     # Label and entry for percentage chance of making a putt
     Label(newWindow, text='Length from the hole(10ft, 5ft, 1ft, etc)').grid(row=1)
@@ -367,7 +368,7 @@ def calculate_change_of_putt(length, amount_of_putts):
     result_eight_putt = (Eight_Putt / len(entry_amount_of_putts.split()) * 100)
     result_nine_putt = (Nine_Putt / len(entry_amount_of_putts.split()) * 100)
 
-    # If statements to check if a person inputed a certain amount of putts, to then print the result of the calculation
+    # If statements to check if a person inputted a certain amount of putts, to then print the result of the calculation
     if result_one_putt > 0:
         print("You will have a", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "away!")
     if result_two_putt > 0:
@@ -440,6 +441,7 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
         sizes.append(Nine_Putt)
         labels.append("Nine Putt")
 
+    # Graph creation
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90)
     ax1.axis('equal')
