@@ -14,6 +14,7 @@ from openpyxl import load_workbook
 # Library for taking a screenshot
 import pyscreenshot as ImageGrab
 
+# Main array loaded into excel sheet
 main_array = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 column_titles_sheet1 = ['Name', 'Date', 'Notes', 'Driver', '3-Wood', '5-Wood', '3-Iron', '4-Iron', '5-Iron', '6-Iron',
                         '7-Iron', '8-Iron', '9-Iron', 'Pitching Wedge', 'Gap Wedge', 'Sand Wedge', 'Lob Wedge',
