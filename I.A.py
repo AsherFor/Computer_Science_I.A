@@ -1,7 +1,6 @@
 # Library for creating GUI and different aspects within
 from tkinter import *
 from tkinter import messagebox
-from tkinter import colorchooser
 # Library for making graphs with different data
 from matplotlib import pyplot as plt
 # Library for putting certain golf data into a dataframe
@@ -11,8 +10,6 @@ import runpy
 # Library for using excel files
 from openpyxl import Workbook
 from openpyxl import load_workbook
-# Library for taking a screenshot
-import pyscreenshot as ImageGrab
 
 # Main array loaded into excel sheet
 main_array = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
@@ -68,7 +65,7 @@ Label(master, text='First Name and Last Name').grid(row=2)
 name = Entry(master)
 name.grid(row=2, column=1)
 
-
+# Function to save name to the main array
 def name_user():
     entry_name = name.get()
     main_array[0] = entry_name
@@ -79,7 +76,7 @@ Label(master, text='Date').grid(row=3)
 date = Entry(master)
 date.grid(row=3, column=1)
 
-
+# Function to save date to the main array
 def date_of_user():
     entry_date = date.get()
     main_array[1] = entry_date
@@ -90,7 +87,7 @@ Label(master, text='Individual notes about golfer').grid(row=8)
 notes = Entry(master)
 notes.grid(row=8, column=1)
 
-
+# Function to save notes to the main array
 def user_notes():
     entry_notes = notes.get()
     main_array[2] = entry_notes
@@ -149,7 +146,7 @@ def claculate_average_distance(distance, club_name):
     average_yards = (eval(entry_distance) / number_of_symbols)
     print("You are able to hit your", entry_club_name, "an average distance of", round(average_yards, 2), "yards!")
 
-    # The following if statements checks the club name the user entered matches a column title, and then assigns the average distance to the main array
+    # The following if statements checks if the club name the user entered matches a column title, and then assigns the average distance to the main array
     if entry_club_name == column_titles_sheet1[3]:
         main_array[3] = average_yards
     if entry_club_name == column_titles_sheet1[4]:
@@ -223,7 +220,6 @@ def accuracy_of_shot():
     Button(newWindow, text="Graph", command=lambda: accuruacy_pie_chart(accuracy, name_of_club)).grid(row=3, column=0)
     Button(newWindow, text="Calculate", command=lambda: calculate_accuracy(name_of_club, accuracy)).grid(row=3,
                                                                                                          column=1)
-
     # Label and entry for accuracy of a shot
     Label(newWindow, text='What Club Are You Using?').grid(row=1)
     Label(newWindow, text='Enter the type of shot you hit (Hook, Slice, Fade, Draw, Push, Pull)').grid(row=2)
@@ -254,13 +250,13 @@ def calculate_accuracy(name_of_club, accuracy):
     result_push = (Push / len(entry_accuracy.split()) * 100)
     result_pull = (Pull / len(entry_accuracy.split()) * 100)
 
-    # If statements to check if a person inputed one of the type of accuracies, to then print the result of the calculation
+    # If statements to check if a person inputed one of the type of accuracies to then print the result of the calculation
     if Hook > 0:
         print("You will hit a hook shot with your", entry_name_of_club, round(result_hook, 2), "% of the time out of",
               len(entry_accuracy.split()), "shots!")
     if Slice > 0:
         print("You will hit a slice shot with your", entry_name_of_club, round(result_slice, 2),
-              "%% of the time out of", len(entry_accuracy.split()), "shots!")
+              "% of the time out of", len(entry_accuracy.split()), "shots!")
     if Fade > 0:
         print("You will hit a fade shot with your", entry_name_of_club, round(result_fade, 2), "% of the time out of",
               len(entry_accuracy.split()), "shots!")
@@ -288,7 +284,7 @@ def accuruacy_pie_chart(accuracy, name_of_club):
     Push = entry_accuracy.count("Push")
     Pull = entry_accuracy.count("Pull")
 
-    # If statements that will append values to arrays if there is an occurence of one of the accuracies in the users entry
+    # If statements that will append values to arrays if there is an occurence of one of the accuracies in the user's entry
     labels = []
     sizes = []
     if Hook > 0:
@@ -343,11 +339,12 @@ def percentage_chance_of_putt():
     amount_of_putts.grid(row=2, column=1)
 
 
+# Calculations of the percentage chance of making a putt at a certain distance
 def calculate_change_of_putt(length, amount_of_putts):
     entry_length = length.get()
     entry_amount_of_putts = amount_of_putts.get()
 
-    # Counting the amount of putts inputted
+    # Counting the occurrences of putts in the user's entry
     One_Putt = entry_amount_of_putts.count("1")
     Two_Putt = entry_amount_of_putts.count("2")
     Three_Putt = entry_amount_of_putts.count("3")
@@ -369,7 +366,7 @@ def calculate_change_of_putt(length, amount_of_putts):
     result_eight_putt = (Eight_Putt / len(entry_amount_of_putts.split()) * 100)
     result_nine_putt = (Nine_Putt / len(entry_amount_of_putts.split()) * 100)
 
-    # If statements to check if a person inputted a certain amount of putts, to then print the result of the calculation
+    # If statements to check if a person inputted a certain amount of putts to then print the result of the calculation
     if result_one_putt > 0:
         print("You will have a", round(result_one_putt, 2), "% change of making a one putt from", entry_length, "away!")
     if result_two_putt > 0:
@@ -394,6 +391,7 @@ def calculate_change_of_putt(length, amount_of_putts):
     if result_nine_putt > 0:
         print("You will have a", round(result_nine_putt, 2), "% change of making a nine putt from", entry_length,
               "away!")
+
 
 # Pie Chart for the percentage chance of making a putt from a certain distance
 def chance_of_making_putt_pie_chart(length, amount_of_putts):
@@ -449,14 +447,17 @@ def chance_of_making_putt_pie_chart(length, amount_of_putts):
     plt.title("Percentage Chance of Making a Putt from " + entry_length + " Away")
     plt.show()
 
+
 # Function that calls a file to run a paint program
 def tracking_consistency():
     runpy.run_path(path_name='Tracking_Consistency_Paint_File.py')
+
 
 # Function to read excel file
 def read_excel_file():
     df = pd.read_excel('Golf_Statistics.xlsx')
     print(df)
+
 
 # Function to save data to an excel file and to exit the code
 def save_exit():
@@ -464,6 +465,7 @@ def save_exit():
     sheet1.append(main_array)
     wb.save(filename='Golf_Statistics.xlsx')
     exit()
+
 
 # Buttons
 Button(master, text="Calculate Average Distance of Golf Club", command=average_distance).grid(row=4)
