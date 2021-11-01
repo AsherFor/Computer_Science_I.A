@@ -1,4 +1,4 @@
-## Installation
+## Mac Installation
 
 Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
@@ -10,7 +10,7 @@ Wait for build folder to appear
 
 Run I.A.py: python3 I.A.py
 
-## Manual Installation
+## Mac Manual Installation
 
 Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
@@ -18,13 +18,33 @@ Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
 
 Pip install libraries:  
 
-* pip install pandas
-* pip install pyscreenshot
-* pip install future
-* pip install matplotlib
-* pip install openpyxl
-* pip install setuptools
-* pip install numpy
+* pip3 install pandas
+* pip3 install pyscreenshot
+* pip3 install future
+* pip3 install matplotlib
+* pip3 install openpyxl
+* pip3 install setuptools
+* pip3 install numpy
+
+Run I.A.py: python3 I.A.py
+
+## Windows Installation
+
+Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
+
+Open up the command prompt as administrator
+
+Copy the file directory of the downloaded repo and paste into cmd: cd "file directory"
+
+Pip install libraries:  
+
+* pip3 install pandas
+* pip3 install pyscreenshot
+* pip3 install future
+* pip3 install matplotlib
+* pip3 install openpyxl
+* pip3 install setuptools
+* pip3 install numpy
 
 Run I.A.py: python3 I.A.py
 
