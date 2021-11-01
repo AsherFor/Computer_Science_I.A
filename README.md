@@ -10,13 +10,11 @@ Wait for build folder to appear
 
 Run I.A.py: python3 I.A.py
 
-## Windows Installation
+## Mac Manual Installation
 
 Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
-Open up the command prompt as administrator
-
-Copy the file directory of the downloaded repo and paste into cmd: cd "file directory"
+Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
 
 Pip install libraries:  
 
@@ -30,12 +28,13 @@ Pip install libraries:
 
 Run I.A.py: python3 I.A.py
 
-
-## Manual Installation
+## Windows Installation
 
 Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
-Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
+Open up the command prompt as administrator
+
+Copy the file directory of the downloaded repo and paste into cmd: cd "file directory"
 
 Pip install libraries:  
 
