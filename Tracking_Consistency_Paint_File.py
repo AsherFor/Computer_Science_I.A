@@ -37,7 +37,7 @@ def clear_canvas():
 
 # Function to take a screenshot
 def screenshot():
-    image = ImageGrab.grab(bbox = None)
+    image = ImageGrab.grab()
     image.show()
 
 
