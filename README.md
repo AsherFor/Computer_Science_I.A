@@ -2,7 +2,7 @@
 
 Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
-Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
+Drag Computer_Science_I.A into terminal and type: cd "Drag folder into terminal"
 
 Run setup.py: sudo python3 setup.py install
 
@@ -14,7 +14,7 @@ Run I.A.py: python3 I.A.py
 
 Clone Repo: https://github.com/AsherFor/Computer_Science_I.A.git
 
-Drag Computer_Science_I.A into terminal: cd Computer_Science_I.A
+Drag Computer_Science_I.A into terminal and type: cd "Drag folder into terminal"
 
 Pip install libraries:  
 
