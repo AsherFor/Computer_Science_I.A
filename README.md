@@ -50,7 +50,8 @@ Run I.A.py: python3 I.A.py
 
 ## Bugs
 
-With tkinter on MacOS, the program might break if you are using dark mode. You might have to change your MacOS appearance to light mode.
+* With tkinter on MacOS, the program might break if you are using dark mode. You might have to change your MacOS appearance to light mode.
+* In order to be able to take a screenshot on Mac, one needs to go into their settings > security and privacy > privacy > screen recording > check terminal. This will allow for one to capture the entire screen.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
