@@ -16,7 +16,6 @@ setup(
     'matplotlib~=3.4.1',
     'openpyxl~=3.0.9',
     'setuptools~=49.2.1',
-    'numpy~=1.20.2',
-    'pyautogui~=0.9.53'
+    'numpy~=1.20.2'
     ]
 )

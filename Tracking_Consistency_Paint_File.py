@@ -2,7 +2,6 @@ from tkinter import *
 from tkinter import colorchooser
 # Library for taking a screenshot
 import pyscreenshot as ImageGrab
-import pyautogui
 
 master = Tk()
 
@@ -38,10 +37,8 @@ def clear_canvas():
 
 # Function to take a screenshot
 def screenshot():
-    myScreenshot = pyautogui.screenshot()
-    myScreenshot.show()
-    # image = ImageGrab.grab()
-    # image.show()
+    image = ImageGrab.grab()
+    image.show()
 
 
 #Buttons
