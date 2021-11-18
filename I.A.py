@@ -453,12 +453,6 @@ def tracking_consistency():
     runpy.run_path(path_name='Tracking_Consistency_Paint_File.py')
 
 
-# Function to read excel file
-def read_excel_file():
-    df = pd.read_excel('Golf_Statistics.xlsx')
-    print(df)
-
-
 # Function to save data to an excel file and to exit the code
 def save_exit():
     sheet1 = wb.worksheets[0]
@@ -473,7 +467,6 @@ Button(master, text="Calculate the Accuracy of a Golf Club", command=accuracy_of
 Button(master, text="Calculate the Percentage Chance of Making a Putt", command=percentage_chance_of_putt).grid(row=6)
 Button(master, text="Tracking Consistency", command=tracking_consistency).grid(row=7)
 Button(master, text="Save and Exit", command=save_exit).grid(row=9, column=1)
-Button(master, text="View Golf Data", command=read_excel_file).grid(row=9, column=0)
 Button(master, text="Enter", command=name_user).grid(row=2, column=2)
 Button(master, text="Enter", command=date_of_user).grid(row=3, column=2)
 Button(master, text="Enter", command=user_notes).grid(row=8, column=2)
